@@ -91,7 +91,21 @@ extension GameScene {
     }
     
     private func createGround() {
+        let groundX = -frame.width / 2
+        let groundY = -frame.height / 2
+        let groundHeight = groundY - 100
         
+        ground = SKShapeNode(rect: CGRect(x: groundX, y: groundY, width: bg.size.height * 2, height: 80))
+        ground.zPosition = entitieszPos
+//        ground.alpha = 0
+        
+        ground.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: groundX, height: groundHeight))
+        ground.physicsBody?.affectedByGravity = false
+        ground.physicsBody?.categoryBitMask = PhysicsCategory.ground
+        
+        ground.physicsBody?.contactTestBitMask = PhysicsCategory.player
+        
+        addChild(ground)
     }
     
     private func createPlayer(initPos: CGPoint) {
@@ -105,6 +119,8 @@ extension GameScene {
         player.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerSize, height: playerSize))
         player.physicsBody?.affectedByGravity = true
         player.physicsBody?.categoryBitMask = PhysicsCategory.player
+        
+        player.physicsBody?.contactTestBitMask = PhysicsCategory.ground
         
         let xRange = SKRange(lowerLimit: 0, upperLimit: frame.width)
         let xConstraint = SKConstraint.positionX(xRange)
