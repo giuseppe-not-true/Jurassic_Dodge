@@ -28,11 +28,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
      **/
     
     var gameLogic: GameLogic = GameLogic.shared
+    
+    var bg: SKSpriteNode!
+    var ground: SKShapeNode!
+    
     var player: SKSpriteNode!
-    var playerSize = 150.0
+    var playerSize = 100.0
     
     var isMovingToTheRight: Bool = false
     var isMovingToTheLeft: Bool = false
+    
+    var entitieszPos = 10.0
+    var bgzPos = 0.0
     
     // Keeps track of when the last update happend.
     // Used to calculate how much time has passed between updates.
@@ -41,7 +48,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         self.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
 
-        SetUpGame()
+        self.setUpGame()
         self.setUpPhysicsWorld()
     }
     
@@ -58,10 +65,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 // MARK: - GAME SET UP
 extension GameScene {
     
-    func SetUpGame() {
+    private func setUpGame() {
         self.gameLogic.setUpGame()
 //        let initPos = CGPoint(x: 0, y: -218)
-        createPlayer(initPos: CGPoint(x: 0, y: 0))
+        self.createBackground()
+        self.createGround()
+        self.createPlayer(initPos: CGPoint(x: 0, y: 0))
     }
     
     private func setUpPhysicsWorld() {
@@ -70,13 +79,28 @@ extension GameScene {
         physicsWorld.contactDelegate = self
     }
     
-    func createPlayer(initPos: CGPoint) {
+    private func createBackground() {
+        bg = SKSpriteNode(imageNamed: "background")
+        bg.name = "background"
+        bg.position = CGPoint(x: 0, y: 30)
+        bg.size.width *= 2
+        bg.size.height *= 2
+        bg.zPosition = bgzPos
+        
+        addChild(bg)
+    }
+    
+    private func createGround() {
+        
+    }
+    
+    private func createPlayer(initPos: CGPoint) {
         player = SKSpriteNode(imageNamed: "dino-front")
         player.name = "player"
         player.position = initPos
         player.size.width = playerSize
         player.size.height = playerSize
-        player.zPosition = 10
+        player.zPosition = entitieszPos
         
         player.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerSize, height: playerSize))
         player.physicsBody?.affectedByGravity = true
@@ -93,10 +117,10 @@ extension GameScene {
 // MARK: - Player Movement
 extension GameScene {
     private func moveLeft() {
-//        self.player.physicsBody?
-//            .applyForce(CGVector(dx: 5, dy: 0))
-        let action = SKAction.move(to: CGPoint(x: 100.0, y: 0.0), duration: 1)
-        self.player.run(action)
+        self.player.physicsBody?
+            .applyForce(CGVector(dx: 5, dy: 0))
+//        let action = SKAction.move(to: CGPoint(x: 100.0, y: 0.0), duration: 1)
+//        self.player.run(action)
         
         print("Moving Left: \(player.physicsBody!.velocity)")
     }
