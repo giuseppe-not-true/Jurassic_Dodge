@@ -117,7 +117,7 @@ extension GameScene {
     }
     
     private func sideTouched(for position: CGPoint) -> SideOfTheScreen {
-        if position.x < self.frame.width / 2 {
+        if position.x < 0 {
             return .left
         } else {
             return .right
