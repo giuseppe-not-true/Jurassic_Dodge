@@ -1,0 +1,366 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		235C893627F468160081CA52 /* Jurassic_DodgeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235C893527F468160081CA52 /* Jurassic_DodgeApp.swift */; };
+		235C893827F468160081CA52 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235C893727F468160081CA52 /* ContentView.swift */; };
+		235C893A27F468180081CA52 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 235C893927F468180081CA52 /* Assets.xcassets */; };
+		235C893D27F468180081CA52 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 235C893C27F468180081CA52 /* Preview Assets.xcassets */; };
+		235C894627F468A80081CA52 /* Game in Resources */ = {isa = PBXBuildFile; fileRef = 235C894327F468A80081CA52 /* Game */; };
+		235C894727F468A80081CA52 /* Supporting Files in Resources */ = {isa = PBXBuildFile; fileRef = 235C894427F468A80081CA52 /* Supporting Files */; };
+		235C894827F468A80081CA52 /* Classes in Resources */ = {isa = PBXBuildFile; fileRef = 235C894527F468A80081CA52 /* Classes */; };
+		235C895A27F46A840081CA52 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 235C895727F46A840081CA52 /* GameScene.sks */; };
+		235C895C27F46A840081CA52 /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235C895927F46A840081CA52 /* GameLogic.swift */; };
+		235C895E27F46A9F0081CA52 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235C895D27F46A9F0081CA52 /* GameScene.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		235C893227F468160081CA52 /* Jurassic Dodge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Jurassic Dodge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		235C893527F468160081CA52 /* Jurassic_DodgeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jurassic_DodgeApp.swift; sourceTree = "<group>"; };
+		235C893727F468160081CA52 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		235C893927F468180081CA52 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		235C893C27F468180081CA52 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		235C894327F468A80081CA52 /* Game */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Game; sourceTree = "<group>"; };
+		235C894427F468A80081CA52 /* Supporting Files */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Supporting Files"; sourceTree = "<group>"; };
+		235C894527F468A80081CA52 /* Classes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Classes; sourceTree = "<group>"; };
+		235C895727F46A840081CA52 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = GameScene.sks; path = "../../../Downloads/Telegram Desktop/Jurassic Dodge/Game/GameScene.sks"; sourceTree = "<group>"; };
+		235C895927F46A840081CA52 /* GameLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameLogic.swift; path = "../../../Downloads/Telegram Desktop/Jurassic Dodge/Game/GameLogic.swift"; sourceTree = "<group>"; };
+		235C895D27F46A9F0081CA52 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		235C892F27F468160081CA52 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		235C892927F468160081CA52 = {
+			isa = PBXGroup;
+			children = (
+				235C893427F468160081CA52 /* Jurassic Dodge */,
+				235C893327F468160081CA52 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		235C893327F468160081CA52 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				235C893227F468160081CA52 /* Jurassic Dodge.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		235C893427F468160081CA52 /* Jurassic Dodge */ = {
+			isa = PBXGroup;
+			children = (
+				235C893527F468160081CA52 /* Jurassic_DodgeApp.swift */,
+				235C893727F468160081CA52 /* ContentView.swift */,
+				235C895927F46A840081CA52 /* GameLogic.swift */,
+				235C895727F46A840081CA52 /* GameScene.sks */,
+				235C895D27F46A9F0081CA52 /* GameScene.swift */,
+				235C894427F468A80081CA52 /* Supporting Files */,
+				235C894527F468A80081CA52 /* Classes */,
+				235C894327F468A80081CA52 /* Game */,
+				235C893927F468180081CA52 /* Assets.xcassets */,
+				235C893B27F468180081CA52 /* Preview Content */,
+			);
+			path = "Jurassic Dodge";
+			sourceTree = "<group>";
+		};
+		235C893B27F468180081CA52 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				235C893C27F468180081CA52 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		235C893127F468160081CA52 /* Jurassic Dodge */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 235C894027F468180081CA52 /* Build configuration list for PBXNativeTarget "Jurassic Dodge" */;
+			buildPhases = (
+				235C892E27F468160081CA52 /* Sources */,
+				235C892F27F468160081CA52 /* Frameworks */,
+				235C893027F468160081CA52 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Jurassic Dodge";
+			productName = "Jurassic Dodge";
+			productReference = 235C893227F468160081CA52 /* Jurassic Dodge.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		235C892A27F468160081CA52 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1330;
+				LastUpgradeCheck = 1330;
+				TargetAttributes = {
+					235C893127F468160081CA52 = {
+						CreatedOnToolsVersion = 13.3;
+					};
+				};
+			};
+			buildConfigurationList = 235C892D27F468160081CA52 /* Build configuration list for PBXProject "Jurassic Dodge" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 235C892927F468160081CA52;
+			productRefGroup = 235C893327F468160081CA52 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				235C893127F468160081CA52 /* Jurassic Dodge */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		235C893027F468160081CA52 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				235C894627F468A80081CA52 /* Game in Resources */,
+				235C893D27F468180081CA52 /* Preview Assets.xcassets in Resources */,
+				235C894827F468A80081CA52 /* Classes in Resources */,
+				235C894727F468A80081CA52 /* Supporting Files in Resources */,
+				235C895A27F46A840081CA52 /* GameScene.sks in Resources */,
+				235C893A27F468180081CA52 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		235C892E27F468160081CA52 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				235C895E27F46A9F0081CA52 /* GameScene.swift in Sources */,
+				235C893827F468160081CA52 /* ContentView.swift in Sources */,
+				235C895C27F46A840081CA52 /* GameLogic.swift in Sources */,
+				235C893627F468160081CA52 /* Jurassic_DodgeApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		235C893E27F468180081CA52 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		235C893F27F468180081CA52 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		235C894127F468180081CA52 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Jurassic Dodge/Preview Content\"";
+				DEVELOPMENT_TEAM = 38F3PD24AD;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "GiuseppeFalso.Jurassic-Dodge";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		235C894227F468180081CA52 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Jurassic Dodge/Preview Content\"";
+				DEVELOPMENT_TEAM = 38F3PD24AD;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "GiuseppeFalso.Jurassic-Dodge";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		235C892D27F468160081CA52 /* Build configuration list for PBXProject "Jurassic Dodge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				235C893E27F468180081CA52 /* Debug */,
+				235C893F27F468180081CA52 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		235C894027F468180081CA52 /* Build configuration list for PBXNativeTarget "Jurassic Dodge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				235C894127F468180081CA52 /* Debug */,
+				235C894227F468180081CA52 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 235C892A27F468160081CA52 /* Project object */;
+}
