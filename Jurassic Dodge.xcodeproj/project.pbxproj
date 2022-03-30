@@ -11,9 +11,11 @@
 		235C893827F468160081CA52 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235C893727F468160081CA52 /* ContentView.swift */; };
 		235C893A27F468180081CA52 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 235C893927F468180081CA52 /* Assets.xcassets */; };
 		235C893D27F468180081CA52 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 235C893C27F468180081CA52 /* Preview Assets.xcassets */; };
-		235C894727F468A80081CA52 /* Supporting Files in Resources */ = {isa = PBXBuildFile; fileRef = 235C894427F468A80081CA52 /* Supporting Files */; };
-		235C894827F468A80081CA52 /* Classes in Resources */ = {isa = PBXBuildFile; fileRef = 235C894527F468A80081CA52 /* Classes */; };
 		235C895E27F46A9F0081CA52 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235C895D27F46A9F0081CA52 /* GameScene.swift */; };
+		23B8413127F4FEFA009FA6C2 /* PlayerClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B8412E27F4FEFA009FA6C2 /* PlayerClass.swift */; };
+		23B8413227F4FEFA009FA6C2 /* PowerUpClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B8412F27F4FEFA009FA6C2 /* PowerUpClass.swift */; };
+		23B8413327F4FEFA009FA6C2 /* MeteorClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B8413027F4FEFA009FA6C2 /* MeteorClass.swift */; };
+		23B8413527F4FF10009FA6C2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B8413427F4FF10009FA6C2 /* Constants.swift */; };
 		23CEF1B927F4714B0020D57E /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CEF1B727F4714B0020D57E /* GameLogic.swift */; };
 		23CEF1BA27F4714B0020D57E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 23CEF1B827F4714B0020D57E /* GameScene.sks */; };
 /* End PBXBuildFile section */
@@ -24,9 +26,11 @@
 		235C893727F468160081CA52 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		235C893927F468180081CA52 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		235C893C27F468180081CA52 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		235C894427F468A80081CA52 /* Supporting Files */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Supporting Files"; sourceTree = "<group>"; };
-		235C894527F468A80081CA52 /* Classes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Classes; sourceTree = "<group>"; };
 		235C895D27F46A9F0081CA52 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		23B8412E27F4FEFA009FA6C2 /* PlayerClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerClass.swift; sourceTree = "<group>"; };
+		23B8412F27F4FEFA009FA6C2 /* PowerUpClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerUpClass.swift; sourceTree = "<group>"; };
+		23B8413027F4FEFA009FA6C2 /* MeteorClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteorClass.swift; sourceTree = "<group>"; };
+		23B8413427F4FF10009FA6C2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		23CEF1B727F4714B0020D57E /* GameLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLogic.swift; sourceTree = "<group>"; };
 		23CEF1B827F4714B0020D57E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -63,11 +67,8 @@
 			children = (
 				235C893527F468160081CA52 /* Jurassic_DodgeApp.swift */,
 				235C893727F468160081CA52 /* ContentView.swift */,
-				235C895D27F46A9F0081CA52 /* GameScene.swift */,
-				23CEF1B727F4714B0020D57E /* GameLogic.swift */,
+				23B8412D27F4FEDB009FA6C2 /* Game elements */,
 				23CEF1B827F4714B0020D57E /* GameScene.sks */,
-				235C894427F468A80081CA52 /* Supporting Files */,
-				235C894527F468A80081CA52 /* Classes */,
 				235C893927F468180081CA52 /* Assets.xcassets */,
 				235C893B27F468180081CA52 /* Preview Content */,
 			);
@@ -80,6 +81,35 @@
 				235C893C27F468180081CA52 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		23B8412D27F4FEDB009FA6C2 /* Game elements */ = {
+			isa = PBXGroup;
+			children = (
+				23B8413727F4FF29009FA6C2 /* Supporting Files */,
+				23CEF1B727F4714B0020D57E /* GameLogic.swift */,
+				235C895D27F46A9F0081CA52 /* GameScene.swift */,
+				23B8413627F4FF17009FA6C2 /* Classes */,
+			);
+			path = "Game elements";
+			sourceTree = "<group>";
+		};
+		23B8413627F4FF17009FA6C2 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				23B8413027F4FEFA009FA6C2 /* MeteorClass.swift */,
+				23B8412E27F4FEFA009FA6C2 /* PlayerClass.swift */,
+				23B8412F27F4FEFA009FA6C2 /* PowerUpClass.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		23B8413727F4FF29009FA6C2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				23B8413427F4FF10009FA6C2 /* Constants.swift */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,8 +171,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				235C893D27F468180081CA52 /* Preview Assets.xcassets in Resources */,
-				235C894827F468A80081CA52 /* Classes in Resources */,
-				235C894727F468A80081CA52 /* Supporting Files in Resources */,
 				23CEF1BA27F4714B0020D57E /* GameScene.sks in Resources */,
 				235C893A27F468180081CA52 /* Assets.xcassets in Resources */,
 			);
@@ -156,9 +184,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				235C895E27F46A9F0081CA52 /* GameScene.swift in Sources */,
+				23B8413227F4FEFA009FA6C2 /* PowerUpClass.swift in Sources */,
 				235C893827F468160081CA52 /* ContentView.swift in Sources */,
 				23CEF1B927F4714B0020D57E /* GameLogic.swift in Sources */,
+				23B8413127F4FEFA009FA6C2 /* PlayerClass.swift in Sources */,
 				235C893627F468160081CA52 /* Jurassic_DodgeApp.swift in Sources */,
+				23B8413327F4FEFA009FA6C2 /* MeteorClass.swift in Sources */,
+				23B8413527F4FF10009FA6C2 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

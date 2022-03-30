@@ -30,10 +30,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameLogic: GameLogic = GameLogic.shared
     
     var bg: SKSpriteNode!
-    var ground: SKShapeNode!
+    var ground: SKNode!
     
-    var player: SKSpriteNode!
+//    var player: SKSpriteNode!
+    var player: PlayerClass!
     var playerSize = 100.0
+    
+    var healthPoints: [SKSpriteNode] = [SKSpriteNode(imageNamed: "heart"), SKSpriteNode(imageNamed: "heart"), SKSpriteNode(imageNamed: "heart")]
     
     var isMovingToTheRight: Bool = false
     var isMovingToTheLeft: Bool = false
@@ -71,6 +74,7 @@ extension GameScene {
         self.createBackground()
         self.createGround()
         self.createPlayer(initPos: CGPoint(x: 0, y: 0))
+        self.setLifes()
     }
     
     private func setUpPhysicsWorld() {
@@ -91,16 +95,18 @@ extension GameScene {
     }
     
     private func createGround() {
-        let groundX = -frame.width / 2
-        let groundY = -frame.height / 2
-        let groundHeight = groundY - 100
+//        let groundX = -frame.width / 2
+//        let groundY = -frame.height / 2
+//        let groundHeight = groundY - 100
         
-        ground = SKShapeNode(rect: CGRect(x: groundX, y: groundY, width: bg.size.height * 2, height: 80))
+        ground = SKNode()
+        ground.position = CGPoint(x: 0, y: -UIScreen.main.bounds.height/2)
         ground.zPosition = entitieszPos
-//        ground.alpha = 0
         
-        ground.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: groundX, height: groundHeight))
+        ground.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: UIScreen.main.bounds.width, height: bg.size.height * 0.1))
         ground.physicsBody?.affectedByGravity = false
+        ground.physicsBody?.isDynamic = false
+        
         ground.physicsBody?.categoryBitMask = PhysicsCategory.ground
         
         ground.physicsBody?.contactTestBitMask = PhysicsCategory.player
@@ -109,7 +115,8 @@ extension GameScene {
     }
     
     private func createPlayer(initPos: CGPoint) {
-        player = SKSpriteNode(imageNamed: "dino-front")
+//        player = SKSpriteNode(imageNamed: "dino-front")
+        player = PlayerClass(imageNamed: "dino-front")
         player.name = "player"
         player.position = initPos
         player.size.width = playerSize
@@ -122,28 +129,51 @@ extension GameScene {
         
         player.physicsBody?.contactTestBitMask = PhysicsCategory.ground
         
-        let xRange = SKRange(lowerLimit: 0, upperLimit: frame.width)
+        player.speed = 8
+        
+        let xRange = SKRange(lowerLimit: -frame.width, upperLimit: frame.width)
         let xConstraint = SKConstraint.positionX(xRange)
         self.player.constraints = [xConstraint]
         
         addChild(player)
+    }
+    
+    private func setLifes() {
+        let initPos = CGPoint(x: -self.size.width*0.40, y: self.size.height*0.40)
+        
+        for i in 0...2 {
+            healthPoints[i].name = "heart"
+            healthPoints[i].size.width = 80.0
+            healthPoints[i].size.height = 80.0
+            healthPoints[i].position.x = initPos.x + CGFloat(70*i)
+            healthPoints[i].position.y = initPos.y
+            healthPoints[i].zPosition = entitieszPos
+            
+            addChild(healthPoints[i])
+        }
     }
 }
 
 // MARK: - Player Movement
 extension GameScene {
     private func moveLeft() {
-        self.player.physicsBody?
-            .applyForce(CGVector(dx: 5, dy: 0))
-//        let action = SKAction.move(to: CGPoint(x: 100.0, y: 0.0), duration: 1)
-//        self.player.run(action)
-        
+//        self.player.physicsBody?
+//            .applyForce(CGVector(dx: 5, dy: 0))
+        let action = SKAction.move(to: CGPoint(x: -UIScreen.main.bounds.maxX, y: self.player.position.y), duration: getDuration(pointA: self.player.position, pointB: CGPoint(x: -UIScreen.main.bounds.maxX, y: self.player.position.y), speed: self.player.speed))
+        self.player.walkLeftAnimation()
+        self.player.run(action, withKey: "move-left")
+
         print("Moving Left: \(player.physicsBody!.velocity)")
     }
     
     private func moveRight() {
-        self.player.physicsBody?
-            .applyForce(CGVector(dx: -5, dy: 0))
+//        self.player.physicsBody?
+//            .applyForce(CGVector(dx: -5, dy: 0))
+//        let action = SKAction.move(to: CGPoint(x: UIScreen.main.bounds.maxX, y: self.player.position.y), duration: 4)
+        
+        let action = SKAction.move(to: CGPoint(x: UIScreen.main.bounds.maxX, y: self.player.position.y), duration: getDuration(pointA: self.player.position, pointB: CGPoint(x: UIScreen.main.bounds.maxX, y: self.player.position.y), speed: self.player.speed))
+        self.player.walkRightAnimation()
+        self.player.run(action, withKey: "move-right")
         
         print("Moving Right: \(player.physicsBody!.velocity)")
     }
@@ -156,6 +186,14 @@ extension GameScene {
         case right, left
     }
     
+    private func getDuration(pointA:CGPoint,pointB:CGPoint,speed:CGFloat)->TimeInterval {
+        let xDist = (pointB.x - pointA.x)
+        let yDist = (pointB.y - pointA.y)
+        let distance = sqrt((xDist * xDist) + (yDist * yDist));
+        let duration : TimeInterval = TimeInterval(distance/speed)
+        return duration
+    }
+    
     private func sideTouched(for position: CGPoint) -> SideOfTheScreen {
         if position.x < 0 {
             return .left
@@ -165,22 +203,26 @@ extension GameScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        let touchLocation = touch.location(in: self)
-        
-        switch sideTouched(for: touchLocation) {
-        case .right:
-            self.isMovingToTheRight = true
-            print("ℹ️ Touching the RIGHT side.")
-        case .left:
-            self.isMovingToTheLeft = true
-            print("ℹ️ Touching the LEFT side.")
+        for touch in touches {
+            guard let touch = touches.first else { return }
+            let touchLocation = touch.location(in: self)
+            
+            switch sideTouched(for: touchLocation) {
+            case .right:
+                self.isMovingToTheRight = true
+                print("ℹ️ Touching the RIGHT side.")
+            case .left:
+                self.isMovingToTheLeft = true
+                print("ℹ️ Touching the LEFT side.")
+            }
         }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.isMovingToTheRight = false
+//        self.player.removeAction(forKey: "move-left")
         self.isMovingToTheLeft = false
+//        self.player.removeAction(forKey: "move-right")
     }
     
 }
