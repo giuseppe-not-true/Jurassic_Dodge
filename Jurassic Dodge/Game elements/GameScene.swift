@@ -15,7 +15,7 @@ struct PhysicsCategory {
     static let player : UInt32 = 0b1
     static let meteor : UInt32 = 0b10
     static let ground : UInt32 = 0b100
-    static let powerup : UInt32 = 0b1000
+    static let powerUp : UInt32 = 0b1000
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -64,6 +64,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.moveLeft()
         }
         
+        if self.player.lifes < 3 {
+            switch(self.player.lifes) {
+            case 0:
+                healthPoints[0].run(.fadeOut(withDuration: 0.2))
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    self.healthPoints[0].removeFromParent()
+                }
+                break
+            case 1:
+                healthPoints[1].run(.fadeOut(withDuration: 0.2))
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    self.healthPoints[1].removeFromParent()
+                }
+                break
+            case 2:
+                healthPoints[2].run(.fadeOut(withDuration: 0.2))
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    self.healthPoints[2].removeFromParent()
+                }
+                break
+            default:
+                break
+            }
+        }
+        
     }
 }
 // MARK: - GAME SET UP
@@ -73,7 +98,7 @@ extension GameScene {
         self.gameLogic.setUpGame()
         self.createBackground()
         self.createGround()
-        self.createPlayer(initPos: CGPoint(x: 0, y: 0))
+        self.createPlayer(initPos: CGPoint(x: 0, y: -150))
         self.startMeteorsCycle()
         self.setLifes()
     }
@@ -149,7 +174,7 @@ extension GameScene {
     private func setLifes() {
         let initPos = CGPoint(x: -self.size.width*0.40, y: self.size.height*0.40)
         
-        for i in 0...2 {
+        for i in 0...self.player.lifes-1 {
             healthPoints[i].name = "heart"
             healthPoints[i].size.width = 80.0
             healthPoints[i].size.height = 80.0
@@ -245,7 +270,7 @@ extension GameScene {
         let positionX = CGFloat.random(in: initialX...finalX)
         let positionY = UIScreen.main.bounds.maxY
         
-        return CGPoint(x: positionX, y: positionY)
+        return CGPoint(x: 0, y: positionY)
     }
     
     private func newMeteor(at position: CGPoint) {
@@ -281,12 +306,131 @@ extension GameScene {
         let secondBody: SKPhysicsBody = contact.bodyB
 
         if let node = firstBody.node, node.name == "meteor" {
-            node.removeFromParent()
+            if let ground = firstBody.node, ground.name == "ground" {
+                let tempNode = MeteorClass()
+                
+                tempNode.randomPowerUp()
+                if tempNode.powerUpName != "none" {
+                    newPowerUp(at: CGPoint(x: node.position.x, y: self.player.position.y), powerUpName: tempNode.powerUpName)
+                }
+                
+                node.removeFromParent()
+            }
+            
+            if let player = secondBody.node, player.name == "player" {
+                if self.player.lifes > 0 {
+                    self.player.lifes -= 1
+                }
+                
+                node.removeFromParent()
+            }
+            
+            if let player = firstBody.node, player.name == "player" {
+                if let powerUp = secondBody.node, powerUp.name == "power-up" {
+                    powerUp.removeFromParent()
+//                    switch(powerUp.powerUpType) {
+//                    case .heart:
+//                        print("nice")
+//                        break
+//                    case .armor:
+//                        print("nice")
+//                        break
+//                    case .mango:
+//                        print("nice")
+//                        break
+//                    default:
+//                        break
+//                    }
+                }
+            }
+            
         }
         
         if let node = secondBody.node, node.name == "meteor" {
-            node.removeFromParent()
+            if let ground = firstBody.node, ground.name == "ground" {
+                let tempNode = MeteorClass()
+                
+                tempNode.randomPowerUp()
+                if tempNode.powerUpName != "none" {
+                    newPowerUp(at: CGPoint(x: node.position.x, y: self.player.position.y), powerUpName: tempNode.powerUpName)
+                }
+                node.removeFromParent()
+            }
+            
+            if let player = firstBody.node, player.name == "player" {
+                if self.player.lifes > 0 {
+                    self.player.lifes -= 1
+                }
+                
+                node.removeFromParent()
+            }
+            
+        }
+        
+        if let player = secondBody.node, player.name == "player" {
+            if let powerUp = firstBody.node, powerUp.name == "power-up" {
+                powerUp.removeFromParent()
+//                switch(powerUp.powerUpType) {
+//                case .heart:
+//                    print("nice")
+//                    break
+//                case .armor:
+//                    print("nice")
+//                    break
+//                case .mango:
+//                    print("nice")
+//                    break
+//                default:
+//                    break
+//                }
+            }
         }
     }
     
+}
+
+//Power Up
+
+extension GameScene {
+    private func newPowerUp(at position: CGPoint, powerUpName: String) {
+        let powerUp = PowerUpClass()
+
+        let newTexture = SKTexture(imageNamed: "power-up-\(powerUpName)")
+        let changeTexture = SKAction.setTexture(newTexture, resize: true)
+        powerUp.run(changeTexture)
+        powerUp.name = "power-up"
+        
+        switch(powerUpName) {
+        case "heart":
+            powerUp.powerUpType = .heart
+            break
+        case "armor":
+            powerUp.powerUpType = .armor
+            break
+        case "mango":
+            powerUp.powerUpType = .mango
+            break
+        default:
+            powerUp.powerUpType = .none
+            break
+        }
+        
+        powerUp.position = position
+        powerUp.zPosition = entitieszPos
+        
+        powerUp.physicsBody = SKPhysicsBody(circleOfRadius: newTexture.size().width/4)
+        powerUp.physicsBody?.affectedByGravity = true
+        
+        powerUp.physicsBody?.categoryBitMask = PhysicsCategory.powerUp
+        
+        powerUp.physicsBody?.contactTestBitMask = PhysicsCategory.player
+        powerUp.physicsBody?.collisionBitMask = PhysicsCategory.ground
+        
+        addChild(powerUp)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            powerUp.removeFromParent()
+        }
+        
+    }
 }

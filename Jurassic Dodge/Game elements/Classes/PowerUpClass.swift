@@ -9,12 +9,12 @@ import Foundation
 import SpriteKit
 
 enum PowerUpType {
-    case health
+    case heart
     case armor
     case mango
     case none
 }
 
-class PowerUpClass {
-    var powerUpType = PowerUpType.health
+class PowerUpClass: SKSpriteNode {
+    var powerUpType = PowerUpType.none
 }
