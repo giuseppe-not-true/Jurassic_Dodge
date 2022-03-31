@@ -26,7 +26,7 @@ import SwiftUI
 enum GameState {
     case mainScreen
     case playing
-    case gameOver
+//    case gameOver
 }
 
 /**

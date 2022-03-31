@@ -10,9 +10,17 @@ import SpriteKit
 
 struct ContentView: View {
     let scene = GameScene(fileNamed: "GameScene")!
+    @State var currentGameState: GameState = .mainScreen
+    
     var body: some View {
-        SpriteView(scene: scene)
-            .ignoresSafeArea()
+        
+        switch currentGameState {
+        case .mainScreen:
+            MenuView(currentGameState: $currentGameState)
+        case .playing:
+            SpriteView(scene: scene)
+                .ignoresSafeArea()
+        }
     }
 }
 

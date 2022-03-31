@@ -66,6 +66,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.moveLeft()
         }
         
+        if self.player.lives == 0 {
+            self.gameLogic.isGameOver = true
+        }
+        
+        if self.gameLogic.isGameOver {
+            gameOverDisplay()
+        }
+        
     }
 }
 // MARK: - GAME SET UP
@@ -130,7 +138,7 @@ extension GameScene {
         player.physicsBody?.contactTestBitMask = PhysicsCategory.meteor | PhysicsCategory.powerUp
         player.physicsBody?.collisionBitMask = PhysicsCategory.ground
         
-        player.speed = 8
+        player.speed = 10
         
         let xRange = SKRange(lowerLimit: -frame.width, upperLimit: frame.width)
         let xConstraint = SKConstraint.positionX(xRange)
@@ -168,6 +176,7 @@ extension GameScene {
         score = SKLabelNode(text: "Score: \(self.gameLogic.currentScore)")
         score.name = "score"
         score.fontSize = 50
+        score.fontColor = .white
         score.position = CGPoint(x: 0, y: self.size.height*0.35)
         score.zPosition = UIzPos
         addChild(score)
@@ -253,7 +262,9 @@ extension GameScene {
         let positionX = CGFloat.random(in: initialX...finalX)
         let positionY = UIScreen.main.bounds.maxY
         
-        return CGPoint(x: 0, y: positionY)
+//        return CGPoint(x: 0, y: positionY)
+        return CGPoint(x: positionX, y: positionY)
+
     }
     
     private func newMeteor(at position: CGPoint) {
@@ -290,6 +301,7 @@ extension GameScene {
         if let node = firstBody.node, node.name == "meteor" {
             if let ground = firstBody.node, ground.name == "ground" {
                 self.gameLogic.score(points: 1)
+                self.score.text = "Score: \(self.gameLogic.currentScore)"
                 let tempNode = MeteorClass()
                 
                 tempNode.randomPowerUp()
@@ -303,8 +315,6 @@ extension GameScene {
             if let player = secondBody.node, player.name == "player" {
                 if self.player.lives > 0 {
                     updateLives(update: -1)
-                } else {
-                    self.gameLogic.isGameOver = true
                 }
                 
                 node.removeFromParent()
@@ -315,6 +325,7 @@ extension GameScene {
         if let node = secondBody.node, node.name == "meteor" {
             if let ground = firstBody.node, ground.name == "ground" {
                 self.gameLogic.score(points: 1)
+                self.score.text = "Score: \(self.gameLogic.currentScore)"
                 let tempNode = MeteorClass()
                 
                 tempNode.randomPowerUp()
@@ -344,9 +355,14 @@ extension GameScene {
                         break
                     case .armor:
                         self.player.animationName = "armor"
+                        self.player.hasArmor = true
                         break
                     case .mango:
                         self.player.animationName = "mango"
+                        self.player.speed *= 2
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                            self.player.speed /= 2
+                        }
                         break
                     default:
                         break
@@ -367,9 +383,14 @@ extension GameScene {
                     break
                 case .armor:
                     self.player.animationName = "armor"
+                    self.player.hasArmor = true
                     break
                 case .mango:
                     self.player.animationName = "mango"
+                    self.player.speed *= 2
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                        self.player.speed /= 2
+                    }
                     break
                 default:
                     break
@@ -436,17 +457,25 @@ extension GameScene {
         if update == 1 {
             if self.player.lives < 3 {
                 self.player.lives += 1
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.healthPoints[self.player.lives-1].run(.fadeIn(withDuration: 0.2))
-                }
+                self.healthPoints[self.player.lives-1].run(.fadeIn(withDuration: 0.2))
             }
         } else if update == -1 {
             if self.player.lives >= 1 {
                 self.healthPoints[self.player.lives-1].run(.fadeOut(withDuration: 0.2))
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.player.lives -= 1
-                }
+                self.player.lives -= 1
             }
         }
+    }
+}
+
+//MARK: - Game Over Scene
+
+extension GameScene {
+    private func gameOverDisplay() {
+        let gameOverScene = GameOverScene(size: size)
+        gameOverScene.scaleMode = scaleMode
+        
+        let reveal = SKTransition.fade(withDuration: 0.5)
+        view?.presentScene(gameOverScene, transition: reveal)
     }
 }

@@ -14,6 +14,7 @@ class PlayerClass: SKSpriteNode {
     var animationName = "dino"
     var walkRight: [SKTexture]
     var walkLeft: [SKTexture]
+    var hasArmor: Bool = false
     
     init(imageNamed: String) {
         
