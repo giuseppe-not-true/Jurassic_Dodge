@@ -10,7 +10,7 @@ import SpriteKit
 
 class PlayerClass: SKSpriteNode {
     var playerState = PlayerState.roger
-    var lifes = 3
+    var lives = 3
     var animationName = "dino"
     var walkRight: [SKTexture]
     var walkLeft: [SKTexture]
@@ -40,6 +40,11 @@ class PlayerClass: SKSpriteNode {
         let walkRightAction = SKAction.animate(with: [walkRight[0], walkRight[1], walkRight[2], walkRight[1]], timePerFrame: 1.5)
         let walk = SKAction.repeatForever(walkRightAction)
         self.run(walk)
+    }
+    
+    func updateWalkAnimations(powerUp: String) {
+        walkRight = [SKTexture(imageNamed: "\(animationName)-walk-right-1"), SKTexture(imageNamed: "\(animationName)-walk-right-2"), SKTexture(imageNamed: "\(animationName)-walk-right-3"), SKTexture(imageNamed: "\(animationName)-walk-right-2")]
+        walkLeft = [SKTexture(imageNamed: "\(animationName)-walk-left-1"), SKTexture(imageNamed: "\(animationName)-walk-left-2"), SKTexture(imageNamed: "\(animationName)-walk-left-3"), SKTexture(imageNamed: "\(animationName)-walk-left-2")]
     }
     
 }

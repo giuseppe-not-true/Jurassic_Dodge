@@ -27,14 +27,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
      *   for example, and comunicate with the Game Scene.
      **/
     
-    var gameLogic: GameLogic = GameLogic.shared
+    @ObservedObject var gameLogic: GameLogic = GameLogic.shared
     
     var bg: SKSpriteNode!
     var ground: SKNode!
     
-//    var player: SKSpriteNode!
     var player: PlayerClass!
     var playerSize = 100.0
+    
+    var score: SKLabelNode!
     
     var healthPoints: [SKSpriteNode] = [SKSpriteNode(imageNamed: "heart"), SKSpriteNode(imageNamed: "heart"), SKSpriteNode(imageNamed: "heart")]
     
@@ -42,6 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var isMovingToTheLeft: Bool = false
     
     var entitieszPos = 10.0
+    var UIzPos = 11.0
     var bgzPos = 0.0
     
     // Keeps track of when the last update happend.
@@ -64,31 +66,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.moveLeft()
         }
         
-        if self.player.lifes < 3 {
-            switch(self.player.lifes) {
-            case 0:
-                healthPoints[0].run(.fadeOut(withDuration: 0.2))
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.healthPoints[0].removeFromParent()
-                }
-                break
-            case 1:
-                healthPoints[1].run(.fadeOut(withDuration: 0.2))
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.healthPoints[1].removeFromParent()
-                }
-                break
-            case 2:
-                healthPoints[2].run(.fadeOut(withDuration: 0.2))
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.healthPoints[2].removeFromParent()
-                }
-                break
-            default:
-                break
-            }
-        }
-        
     }
 }
 // MARK: - GAME SET UP
@@ -100,7 +77,8 @@ extension GameScene {
         self.createGround()
         self.createPlayer(initPos: CGPoint(x: 0, y: -150))
         self.startMeteorsCycle()
-        self.setLifes()
+        self.setLives()
+        self.setScore()
     }
     
     private func setUpPhysicsWorld() {
@@ -149,7 +127,7 @@ extension GameScene {
         player.physicsBody?.affectedByGravity = true
         player.physicsBody?.categoryBitMask = PhysicsCategory.player
         
-        player.physicsBody?.contactTestBitMask = PhysicsCategory.meteor
+        player.physicsBody?.contactTestBitMask = PhysicsCategory.meteor | PhysicsCategory.powerUp
         player.physicsBody?.collisionBitMask = PhysicsCategory.ground
         
         player.speed = 8
@@ -171,19 +149,28 @@ extension GameScene {
         run(meteorCycleAction)
     }
     
-    private func setLifes() {
+    private func setLives() {
         let initPos = CGPoint(x: -self.size.width*0.40, y: self.size.height*0.40)
         
-        for i in 0...self.player.lifes-1 {
+        for i in 0...self.player.lives-1 {
             healthPoints[i].name = "heart"
             healthPoints[i].size.width = 80.0
             healthPoints[i].size.height = 80.0
             healthPoints[i].position.x = initPos.x + CGFloat(70*i)
             healthPoints[i].position.y = initPos.y
-            healthPoints[i].zPosition = entitieszPos
+            healthPoints[i].zPosition = UIzPos
             
             addChild(healthPoints[i])
         }
+    }
+    
+    private func setScore() {
+        score = SKLabelNode(text: "Score: \(self.gameLogic.currentScore)")
+        score.name = "score"
+        score.fontSize = 50
+        score.position = CGPoint(x: 0, y: self.size.height*0.35)
+        score.zPosition = UIzPos
+        addChild(score)
     }
 }
 
@@ -191,20 +178,18 @@ extension GameScene {
 extension GameScene {
     private func moveLeft() {
         
-        let action = SKAction.move(to: CGPoint(x: -UIScreen.main.bounds.maxX, y: self.player.position.y), duration: getDuration(pointA: self.player.position, pointB: CGPoint(x: -UIScreen.main.bounds.maxX, y: self.player.position.y), speed: self.player.speed))
+        let action = SKAction.move(to: CGPoint(x: -self.frame.width*0.45, y: self.player.position.y), duration: getDuration(pointA: self.player.position, pointB: CGPoint(x: -self.frame.width*0.45, y: self.player.position.y), speed: self.player.speed))
         self.player.walkLeftAnimation()
         self.player.run(action, withKey: "move-left")
 
-        print("Moving Left: \(player.physicsBody!.velocity)")
     }
     
     private func moveRight() {
         
-        let action = SKAction.move(to: CGPoint(x: UIScreen.main.bounds.maxX, y: self.player.position.y), duration: getDuration(pointA: self.player.position, pointB: CGPoint(x: UIScreen.main.bounds.maxX, y: self.player.position.y), speed: self.player.speed))
+        let action = SKAction.move(to: CGPoint(x: self.frame.width*0.45, y: self.player.position.y), duration: getDuration(pointA: self.player.position, pointB: CGPoint(x: self.frame.width*0.45, y: self.player.position.y), speed: self.player.speed))
         self.player.walkRightAnimation()
         self.player.run(action, withKey: "move-right")
         
-        print("Moving Right: \(player.physicsBody!.velocity)")
     }
 }
 
@@ -238,10 +223,8 @@ extension GameScene {
             switch sideTouched(for: touchLocation) {
             case .right:
                 self.isMovingToTheRight = true
-                print("ℹ️ Touching the RIGHT side.")
             case .left:
                 self.isMovingToTheLeft = true
-                print("ℹ️ Touching the LEFT side.")
             }
         
     }
@@ -301,12 +284,12 @@ extension GameScene {
 extension GameScene {
     
     func didBegin(_ contact: SKPhysicsContact) {
-        print("Contact happened!")
         let firstBody: SKPhysicsBody = contact.bodyA
         let secondBody: SKPhysicsBody = contact.bodyB
 
         if let node = firstBody.node, node.name == "meteor" {
             if let ground = firstBody.node, ground.name == "ground" {
+                self.gameLogic.score(points: 1)
                 let tempNode = MeteorClass()
                 
                 tempNode.randomPowerUp()
@@ -318,36 +301,20 @@ extension GameScene {
             }
             
             if let player = secondBody.node, player.name == "player" {
-                if self.player.lifes > 0 {
-                    self.player.lifes -= 1
+                if self.player.lives > 0 {
+                    updateLives(update: -1)
+                } else {
+                    self.gameLogic.isGameOver = true
                 }
                 
                 node.removeFromParent()
-            }
-            
-            if let player = firstBody.node, player.name == "player" {
-                if let powerUp = secondBody.node, powerUp.name == "power-up" {
-                    powerUp.removeFromParent()
-//                    switch(powerUp.powerUpType) {
-//                    case .heart:
-//                        print("nice")
-//                        break
-//                    case .armor:
-//                        print("nice")
-//                        break
-//                    case .mango:
-//                        print("nice")
-//                        break
-//                    default:
-//                        break
-//                    }
-                }
             }
             
         }
         
         if let node = secondBody.node, node.name == "meteor" {
             if let ground = firstBody.node, ground.name == "ground" {
+                self.gameLogic.score(points: 1)
                 let tempNode = MeteorClass()
                 
                 tempNode.randomPowerUp()
@@ -358,31 +325,57 @@ extension GameScene {
             }
             
             if let player = firstBody.node, player.name == "player" {
-                if self.player.lifes > 0 {
-                    self.player.lifes -= 1
+                if self.player.lives > 0 {
+                    updateLives(update: -1)
                 }
                 
                 node.removeFromParent()
             }
             
         }
+                
+        if let player = firstBody.node, player.name == "player" {
+            if let powerUp = secondBody.node as? PowerUpClass, powerUp.name == "power-up" {
+                    switch(powerUp.powerUpType) {
+                    case .heart:
+                        if self.player.lives < 3 {
+                            updateLives(update: 1)
+                        }
+                        break
+                    case .armor:
+                        self.player.animationName = "armor"
+                        break
+                    case .mango:
+                        self.player.animationName = "mango"
+                        break
+                    default:
+                        break
+                    }
+                
+                powerUp.removeFromParent()
+            }
+        }
         
         if let player = secondBody.node, player.name == "player" {
-            if let powerUp = firstBody.node, powerUp.name == "power-up" {
+            print("OK")
+            if let powerUp = firstBody.node as? PowerUpClass, powerUp.name == "power-up" {
+                switch(powerUp.powerUpType) {
+                case .heart:
+                    if self.player.lives < 3 {
+                        updateLives(update: 1)
+                    }
+                    break
+                case .armor:
+                    self.player.animationName = "armor"
+                    break
+                case .mango:
+                    self.player.animationName = "mango"
+                    break
+                default:
+                    break
+                }
+                
                 powerUp.removeFromParent()
-//                switch(powerUp.powerUpType) {
-//                case .heart:
-//                    print("nice")
-//                    break
-//                case .armor:
-//                    print("nice")
-//                    break
-//                case .mango:
-//                    print("nice")
-//                    break
-//                default:
-//                    break
-//                }
             }
         }
     }
@@ -394,7 +387,8 @@ extension GameScene {
 extension GameScene {
     private func newPowerUp(at position: CGPoint, powerUpName: String) {
         let powerUp = PowerUpClass()
-
+        powerUp.size = CGSize(width: 50, height: 50)
+        
         let newTexture = SKTexture(imageNamed: "power-up-\(powerUpName)")
         let changeTexture = SKAction.setTexture(newTexture, resize: true)
         powerUp.run(changeTexture)
@@ -432,5 +426,27 @@ extension GameScene {
             powerUp.removeFromParent()
         }
         
+    }
+}
+
+//MARK: - Adding Lives
+
+extension GameScene {
+    private func updateLives(update: Int) {
+        if update == 1 {
+            if self.player.lives < 3 {
+                self.player.lives += 1
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    self.healthPoints[self.player.lives-1].run(.fadeIn(withDuration: 0.2))
+                }
+            }
+        } else if update == -1 {
+            if self.player.lives >= 1 {
+                self.healthPoints[self.player.lives-1].run(.fadeOut(withDuration: 0.2))
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    self.player.lives -= 1
+                }
+            }
+        }
     }
 }
