@@ -389,7 +389,7 @@ extension GameScene {
     
 }
 
-//Power Up
+//MARK: - Power Up
 
 extension GameScene {
     private func newPowerUp(at position: CGPoint, powerUpName: String) {
