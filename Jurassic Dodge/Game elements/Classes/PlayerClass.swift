@@ -11,19 +11,19 @@ import SpriteKit
 class PlayerClass: SKSpriteNode {
     var playerState = PlayerState.roger
     var lifes = 3
-    var playerStateName = "dino"
+    var animationName = "dino"
     var walkRight: [SKTexture]
     var walkLeft: [SKTexture]
     
     init(imageNamed: String) {
         
-        walkRight = [SKTexture(imageNamed: "\(playerStateName)-walk-right-1"), SKTexture(imageNamed: "\(playerStateName)-walk-right-2"), SKTexture(imageNamed: "\(playerStateName)-walk-right-3"), SKTexture(imageNamed: "\(playerStateName)-walk-right-2")]
+        walkRight = [SKTexture(imageNamed: "\(animationName)-walk-right-1"), SKTexture(imageNamed: "\(animationName)-walk-right-2"), SKTexture(imageNamed: "\(animationName)-walk-right-3"), SKTexture(imageNamed: "\(animationName)-walk-right-2")]
             
-        walkLeft = [SKTexture(imageNamed: "\(playerStateName)-walk-left-1"), SKTexture(imageNamed: "\(playerStateName)-walk-left-2"), SKTexture(imageNamed: "\(playerStateName)-walk-left-3"), SKTexture(imageNamed: "\(playerStateName)-walk-left-2")]
+        walkLeft = [SKTexture(imageNamed: "\(animationName)-walk-left-1"), SKTexture(imageNamed: "\(animationName)-walk-left-2"), SKTexture(imageNamed: "\(animationName)-walk-left-3"), SKTexture(imageNamed: "\(animationName)-walk-left-2")]
         
 //        super.init(texture: SKTexture(imageNamed: imageNamed), color: UIColor.clear, size: SKTexture(imageNamed: imageNamed).size())
         
-        super.init(texture: SKTexture(imageNamed: "\(playerStateName)-front"), color: UIColor.clear, size: SKTexture(imageNamed: "\(playerStateName)-front").size())
+        super.init(texture: SKTexture(imageNamed: "\(animationName)-front"), color: UIColor.clear, size: SKTexture(imageNamed: "\(animationName)-front").size())
     }
     
     required init?(coder aDecoder: NSCoder) {
