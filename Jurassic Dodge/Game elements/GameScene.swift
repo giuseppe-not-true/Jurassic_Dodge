@@ -63,6 +63,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if isMovingToTheLeft {
             self.moveLeft()
         }
+        
     }
 }
 // MARK: - GAME SET UP
@@ -96,16 +97,17 @@ extension GameScene {
     
     private func createGround() {
         ground = SKNode()
+        ground.name = "ground"
         ground.position = CGPoint(x: 0, y: -UIScreen.main.bounds.height/2)
         ground.zPosition = entitieszPos
         
-        ground.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: UIScreen.main.bounds.width, height: bg.size.height * 0.1))
+        ground.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: UIScreen.main.bounds.width, height: bg.size.height * 0.2))
         ground.physicsBody?.affectedByGravity = false
         ground.physicsBody?.isDynamic = false
         
         ground.physicsBody?.categoryBitMask = PhysicsCategory.ground
         
-        ground.physicsBody?.contactTestBitMask = PhysicsCategory.player
+        ground.physicsBody?.contactTestBitMask = PhysicsCategory.meteor
         
         addChild(ground)
     }
@@ -118,11 +120,12 @@ extension GameScene {
         player.size.height = playerSize
         player.zPosition = entitieszPos
         
-        player.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerSize, height: playerSize))
+        player.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerSize/2.5, height: playerSize/2.5))
         player.physicsBody?.affectedByGravity = true
         player.physicsBody?.categoryBitMask = PhysicsCategory.player
         
-        player.physicsBody?.contactTestBitMask = PhysicsCategory.ground
+        player.physicsBody?.contactTestBitMask = PhysicsCategory.meteor
+        player.physicsBody?.collisionBitMask = PhysicsCategory.ground
         
         player.speed = 8
         
@@ -204,7 +207,6 @@ extension GameScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches {
             guard let touch = touches.first else { return }
             let touchLocation = touch.location(in: self)
             
@@ -216,7 +218,7 @@ extension GameScene {
                 self.isMovingToTheLeft = true
                 print("ℹ️ Touching the LEFT side.")
             }
-        }
+        
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -248,11 +250,11 @@ extension GameScene {
     
     private func newMeteor(at position: CGPoint) {
         let newMeteor = SKSpriteNode(imageNamed: "enemy-meteor")
-        newMeteor.name = "asteroid"
+        newMeteor.name = "meteor"
         newMeteor.position = position
         newMeteor.zPosition = entitieszPos
         
-        newMeteor.physicsBody = SKPhysicsBody(circleOfRadius: 25.0)
+        newMeteor.physicsBody = SKPhysicsBody(circleOfRadius: newMeteor.size.width/2.5)
         newMeteor.physicsBody?.affectedByGravity = true
         
         newMeteor.physicsBody?.categoryBitMask = PhysicsCategory.meteor
@@ -266,6 +268,25 @@ extension GameScene {
             SKAction.wait(forDuration: 5.0),
             SKAction.removeFromParent()
         ]))
+    }
+    
+}
+
+// MARK: - Contacts and Collisions
+extension GameScene {
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        print("Contact happened!")
+        let firstBody: SKPhysicsBody = contact.bodyA
+        let secondBody: SKPhysicsBody = contact.bodyB
+
+        if let node = firstBody.node, node.name == "meteor" {
+            node.removeFromParent()
+        }
+        
+        if let node = secondBody.node, node.name == "meteor" {
+            node.removeFromParent()
+        }
     }
     
 }
