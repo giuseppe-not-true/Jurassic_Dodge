@@ -70,10 +70,10 @@ extension GameScene {
     
     private func setUpGame() {
         self.gameLogic.setUpGame()
-//        let initPos = CGPoint(x: 0, y: -218)
         self.createBackground()
         self.createGround()
         self.createPlayer(initPos: CGPoint(x: 0, y: 0))
+        self.startMeteorsCycle()
         self.setLifes()
     }
     
@@ -95,10 +95,6 @@ extension GameScene {
     }
     
     private func createGround() {
-//        let groundX = -frame.width / 2
-//        let groundY = -frame.height / 2
-//        let groundHeight = groundY - 100
-        
         ground = SKNode()
         ground.position = CGPoint(x: 0, y: -UIScreen.main.bounds.height/2)
         ground.zPosition = entitieszPos
@@ -137,6 +133,16 @@ extension GameScene {
         addChild(player)
     }
     
+    func startMeteorsCycle() {
+        let createMeteorAction = SKAction.run(createMeteor)
+        let waitAction = SKAction.wait(forDuration: 2.0)
+        
+        let createAndWaitAction = SKAction.sequence([createMeteorAction, waitAction])
+        let meteorCycleAction = SKAction.repeatForever(createAndWaitAction)
+        
+        run(meteorCycleAction)
+    }
+    
     private func setLifes() {
         let initPos = CGPoint(x: -self.size.width*0.40, y: self.size.height*0.40)
         
@@ -156,8 +162,7 @@ extension GameScene {
 // MARK: - Player Movement
 extension GameScene {
     private func moveLeft() {
-//        self.player.physicsBody?
-//            .applyForce(CGVector(dx: 5, dy: 0))
+        
         let action = SKAction.move(to: CGPoint(x: -UIScreen.main.bounds.maxX, y: self.player.position.y), duration: getDuration(pointA: self.player.position, pointB: CGPoint(x: -UIScreen.main.bounds.maxX, y: self.player.position.y), speed: self.player.speed))
         self.player.walkLeftAnimation()
         self.player.run(action, withKey: "move-left")
@@ -166,9 +171,6 @@ extension GameScene {
     }
     
     private func moveRight() {
-//        self.player.physicsBody?
-//            .applyForce(CGVector(dx: -5, dy: 0))
-//        let action = SKAction.move(to: CGPoint(x: UIScreen.main.bounds.maxX, y: self.player.position.y), duration: 4)
         
         let action = SKAction.move(to: CGPoint(x: UIScreen.main.bounds.maxX, y: self.player.position.y), duration: getDuration(pointA: self.player.position, pointB: CGPoint(x: UIScreen.main.bounds.maxX, y: self.player.position.y), speed: self.player.speed))
         self.player.walkRightAnimation()
@@ -222,6 +224,48 @@ extension GameScene {
 //        self.player.removeAction(forKey: "move-left")
         self.isMovingToTheLeft = false
 //        self.player.removeAction(forKey: "move-right")
+    }
+    
+}
+
+// MARK: - Meteors
+extension GameScene {
+    
+    private func createMeteor() {
+        let meteorPosition = self.randomMeteorPosition()
+        newMeteor(at: meteorPosition)
+    }
+    
+    private func randomMeteorPosition() -> CGPoint {
+        let initialX: CGFloat = -self.frame.width * 0.45
+        let finalX: CGFloat = self.frame.width * 0.45
+        
+        let positionX = CGFloat.random(in: initialX...finalX)
+        let positionY = UIScreen.main.bounds.maxY
+        
+        return CGPoint(x: positionX, y: positionY)
+    }
+    
+    private func newMeteor(at position: CGPoint) {
+        let newMeteor = SKSpriteNode(imageNamed: "enemy-meteor")
+        newMeteor.name = "asteroid"
+        newMeteor.position = position
+        newMeteor.zPosition = entitieszPos
+        
+        newMeteor.physicsBody = SKPhysicsBody(circleOfRadius: 25.0)
+        newMeteor.physicsBody?.affectedByGravity = true
+        
+        newMeteor.physicsBody?.categoryBitMask = PhysicsCategory.meteor
+        
+        newMeteor.physicsBody?.contactTestBitMask = PhysicsCategory.player
+        newMeteor.physicsBody?.collisionBitMask = PhysicsCategory.ground
+        
+        addChild(newMeteor)
+        
+        newMeteor.run(SKAction.sequence([
+            SKAction.wait(forDuration: 5.0),
+            SKAction.removeFromParent()
+        ]))
     }
     
 }
