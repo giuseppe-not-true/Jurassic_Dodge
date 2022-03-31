@@ -11,19 +11,33 @@ import SpriteKit
 class PlayerClass: SKSpriteNode {
     var playerState = PlayerState.roger
     var lifes = 3
+    var playerStateName = "dino"
+    var walkRight: [SKTexture]
+    var walkLeft: [SKTexture]
     
-    let walkRight: [SKTexture] = [SKTexture(imageNamed: "dino-walk-right-1"), SKTexture(imageNamed: "dino-walk-right-2"), SKTexture(imageNamed: "dino-walk-right-3")]
+    init(imageNamed: String) {
         
-    let walkLeft: [SKTexture] = [SKTexture(imageNamed: "dino-walk-left-1"), SKTexture(imageNamed: "dino-walk-left-2"), SKTexture(imageNamed: "dino-walk-left-3")]
+        walkRight = [SKTexture(imageNamed: "\(playerStateName)-walk-right-1"), SKTexture(imageNamed: "\(playerStateName)-walk-right-2"), SKTexture(imageNamed: "\(playerStateName)-walk-right-3"), SKTexture(imageNamed: "\(playerStateName)-walk-right-2")]
+            
+        walkLeft = [SKTexture(imageNamed: "\(playerStateName)-walk-left-1"), SKTexture(imageNamed: "\(playerStateName)-walk-left-2"), SKTexture(imageNamed: "\(playerStateName)-walk-left-3"), SKTexture(imageNamed: "\(playerStateName)-walk-left-2")]
+        
+//        super.init(texture: SKTexture(imageNamed: imageNamed), color: UIColor.clear, size: SKTexture(imageNamed: imageNamed).size())
+        
+        super.init(texture: SKTexture(imageNamed: "\(playerStateName)-front"), color: UIColor.clear, size: SKTexture(imageNamed: "\(playerStateName)-front").size())
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     func walkLeftAnimation() {
-        let walkLeftAction = SKAction.animate(with: [walkLeft[0], walkLeft[1], walkLeft[2]], timePerFrame: 1.5)
+        let walkLeftAction = SKAction.animate(with: [walkLeft[0], walkLeft[1], walkLeft[2], walkLeft[1]],  timePerFrame: 1.5)
         let walk = SKAction.repeatForever(walkLeftAction)
         self.run(walk)
     }
     
     func walkRightAnimation() {
-        let walkRightAction = SKAction.animate(with: [walkRight[0], walkRight[1], walkRight[2]], timePerFrame: 1.5)
+        let walkRightAction = SKAction.animate(with: [walkRight[0], walkRight[1], walkRight[2], walkRight[1]], timePerFrame: 1.5)
         let walk = SKAction.repeatForever(walkRightAction)
         self.run(walk)
     }

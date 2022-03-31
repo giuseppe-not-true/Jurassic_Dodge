@@ -115,7 +115,6 @@ extension GameScene {
     }
     
     private func createPlayer(initPos: CGPoint) {
-//        player = SKSpriteNode(imageNamed: "dino-front")
         player = PlayerClass(imageNamed: "dino-front")
         player.name = "player"
         player.position = initPos
