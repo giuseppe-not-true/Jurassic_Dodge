@@ -175,6 +175,7 @@ extension GameScene {
     private func setScore() {
         score = SKLabelNode(text: "Score: \(self.gameLogic.currentScore)")
         score.name = "score"
+        score.fontName = "Hawai"
         score.fontSize = 50
         score.fontColor = .white
         score.position = CGPoint(x: 0, y: self.size.height*0.35)
@@ -262,8 +263,8 @@ extension GameScene {
         let positionX = CGFloat.random(in: initialX...finalX)
         let positionY = UIScreen.main.bounds.maxY
         
-//        return CGPoint(x: 0, y: positionY)
-        return CGPoint(x: positionX, y: positionY)
+        return CGPoint(x: 0, y: positionY)
+//        return CGPoint(x: positionX, y: positionY)
 
     }
     
@@ -356,7 +357,7 @@ extension GameScene {
                     case .armor:
                         switch(self.player.hasArmor) {
                         case true:
-                            self.gameLogic.score(points: 1)
+                            self.gameLogic.score(points: 2)
                             self.score.text = "Score: \(self.gameLogic.currentScore)"
                             break
                         case false:
@@ -399,7 +400,7 @@ extension GameScene {
                     case .mango:
                         switch(self.player.hasMango) {
                         case true:
-                            self.gameLogic.score(points: 1)
+                            self.gameLogic.score(points: 2)
                             self.score.text = "Score: \(self.gameLogic.currentScore)"
                             break
                         case false:
@@ -472,7 +473,7 @@ extension GameScene {
                 case .armor:
                     switch(self.player.hasArmor) {
                     case true:
-                        self.gameLogic.score(points: 1)
+                        self.gameLogic.score(points: 2)
                         self.score.text = "Score: \(self.gameLogic.currentScore)"
                         break
                     case false:
@@ -515,7 +516,7 @@ extension GameScene {
                 case .mango:
                     switch(self.player.hasMango) {
                     case true:
-                        self.gameLogic.score(points: 1)
+                        self.gameLogic.score(points: 2)
                         self.score.text = "Score: \(self.gameLogic.currentScore)"
                         break
                     case false:

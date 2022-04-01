@@ -14,7 +14,7 @@ class GameOverScene: SKScene {
     
     var bg = SKSpriteNode(imageNamed: "background")
     var finalScore = SKLabelNode()
-    var restartButton = SKSpriteNode(imageNamed: "move-left")
+    var restartButton = SKSpriteNode(imageNamed: "replay-button")
     var restartLabel = SKLabelNode()
     
     override init(size: CGSize) {
