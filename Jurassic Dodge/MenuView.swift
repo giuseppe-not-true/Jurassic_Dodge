@@ -29,10 +29,21 @@ struct MenuView: View {
                 .opacity(0.5)
             
             VStack() {
-                Text("Jurassic Dodge")
-                    .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height*0.2)
-                    .foregroundColor(.white)
-                    .font(.largeTitle)
+                VStack(spacing: 0) {
+                    Text("JURASSIC")
+                        .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height*0.2)
+                        .font(Font.custom("Hawai", size: 70))
+                        .foregroundColor(.white)
+
+                    Text("DODGE")
+                        .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height*0.12)
+                        .font(Font.custom("Speedway", size: 55))
+                        .foregroundColor(.white)
+//                        .foregroundColor(UIColor.orangeMenu)
+
+                }
+
+                    
                 Text("Tap to save Roger from extinction!")
                     .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height*0.1)
                     .foregroundColor(.white)
@@ -41,6 +52,11 @@ struct MenuView: View {
             currentGameState = .playing
         }
     }
+}
+
+extension Color {
+    static let greenMenu = UIColor(named: "Green Menu")
+    static let orangeMenu = UIColor(named: "Orange Menu")
 }
 
 struct MenuView_Previews: PreviewProvider {

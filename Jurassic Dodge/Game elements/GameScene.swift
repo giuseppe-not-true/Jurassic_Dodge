@@ -67,7 +67,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if self.player.lives == 0 {
-            self.gameLogic.isGameOver = true
+            self.gameLogic.finishTheGame()
         }
         
         if self.gameLogic.isGameOver {
@@ -354,14 +354,102 @@ extension GameScene {
                         }
                         break
                     case .armor:
-                        self.player.animationName = "armor"
-                        self.player.hasArmor = true
+                        switch(self.player.hasArmor) {
+                        case true:
+                            self.gameLogic.score(points: 1)
+                            self.score.text = "Score: \(self.gameLogic.currentScore)"
+                            break
+                        case false:
+                            if self.player.hasMango{
+                                self.player.animationName = "red-armor"
+                                self.player.hasArmor = true
+                                self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                                if isMovingToTheLeft {
+                                    self.player.isMovingLeft = true
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                        self.player.isMovingLeft = false
+                                    }
+                                } else if isMovingToTheRight {
+                                    self.player.isMovingRight = true
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                        self.player.isMovingRight = false
+                                    }
+                                }
+                            } else {
+                                self.player.animationName = "armor"
+                                self.player.hasArmor = true
+                                self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                                if isMovingToTheLeft {
+                                    self.player.isMovingLeft = true
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                        self.player.isMovingLeft = false
+                                    }
+                                } else if isMovingToTheRight {
+                                    self.player.isMovingRight = true
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                        self.player.isMovingRight = false
+                                    }
+                                }
+                            }
+                            break
+                        default:
+                            break
+                        }
                         break
                     case .mango:
-                        self.player.animationName = "mango"
-                        self.player.speed *= 2
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                            self.player.speed /= 2
+                        switch(self.player.hasMango) {
+                        case true:
+                            self.gameLogic.score(points: 1)
+                            self.score.text = "Score: \(self.gameLogic.currentScore)"
+                            break
+                        case false:
+                            if self.player.hasArmor {
+                                self.player.animationName = "red-armor"
+                                self.player.hasMango = true
+                                self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                                if isMovingToTheLeft {
+                                    self.player.isMovingLeft = true
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                        self.player.isMovingLeft = false
+                                    }
+                                } else if isMovingToTheRight {
+                                    self.player.isMovingRight = true
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                        self.player.isMovingRight = false
+                                    }
+                                }
+                                self.player.speed *= 2
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                                    self.player.speed /= 2
+                                    self.player.hasMango = false
+                                    self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                                }
+
+                            } else {
+                                self.player.animationName = "mango"
+                                self.player.hasMango = true
+                                self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                                if isMovingToTheLeft {
+                                    self.player.isMovingLeft = true
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                        self.player.isMovingLeft = false
+                                    }
+                                } else if isMovingToTheRight {
+                                    self.player.isMovingRight = true
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                        self.player.isMovingRight = false
+                                    }
+                                }
+                                self.player.speed *= 2
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                                    self.player.speed /= 2
+                                    self.player.hasMango = false
+                                    self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                                }
+                            }
+                            break
+                        default:
+                            break
                         }
                         break
                     default:
@@ -382,14 +470,100 @@ extension GameScene {
                     }
                     break
                 case .armor:
-                    self.player.animationName = "armor"
-                    self.player.hasArmor = true
+                    switch(self.player.hasArmor) {
+                    case true:
+                        self.gameLogic.score(points: 1)
+                        self.score.text = "Score: \(self.gameLogic.currentScore)"
+                        break
+                    case false:
+                        if self.player.hasMango{
+                            self.player.animationName = "red-armor"
+                            self.player.hasArmor = true
+                            self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                            if isMovingToTheLeft {
+                                self.player.isMovingLeft = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    self.player.isMovingLeft = false
+                                }
+                            } else if isMovingToTheRight {
+                                self.player.isMovingRight = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    self.player.isMovingRight = false
+                                }
+                            }
+                        } else {
+                            self.player.animationName = "armor"
+                            self.player.hasArmor = true
+                            self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                            if isMovingToTheLeft {
+                                self.player.isMovingLeft = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    self.player.isMovingLeft = false
+                                }
+                            } else if isMovingToTheRight {
+                                self.player.isMovingRight = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    self.player.isMovingRight = false
+                                }
+                            }
+                        }
+                        break
+                    default:
+                        break
+                    }
                     break
                 case .mango:
-                    self.player.animationName = "mango"
-                    self.player.speed *= 2
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                        self.player.speed /= 2
+                    switch(self.player.hasMango) {
+                    case true:
+                        self.gameLogic.score(points: 1)
+                        self.score.text = "Score: \(self.gameLogic.currentScore)"
+                        break
+                    case false:
+                        if self.player.hasArmor {
+                            self.player.animationName = "red-armor"
+                            self.player.hasMango = true
+                            self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                            if isMovingToTheLeft {
+                                self.player.isMovingLeft = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    self.player.isMovingLeft = false
+                                }
+                            } else if isMovingToTheRight {
+                                self.player.isMovingRight = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    self.player.isMovingRight = false
+                                }
+                            }
+                            self.player.speed *= 2
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                                self.player.speed /= 2
+                                self.player.hasMango = false
+                            }
+
+                        } else {
+                            self.player.animationName = "mango"
+                            self.player.hasMango = true
+                            self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                            if isMovingToTheLeft {
+                                self.player.isMovingLeft = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    self.player.isMovingLeft = false
+                                }
+                            } else if isMovingToTheRight {
+                                self.player.isMovingRight = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    self.player.isMovingRight = false
+                                }
+                            }
+                            self.player.speed *= 2
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                                self.player.speed /= 2
+                                self.player.hasMango = false
+                            }
+                        }
+                        break
+                    default:
+                        break
                     }
                     break
                 default:

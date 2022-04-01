@@ -12,9 +12,12 @@ class PlayerClass: SKSpriteNode {
     var playerState = PlayerState.roger
     var lives = 3
     var animationName = "dino"
+    var isMovingLeft = false
+    var isMovingRight = false
     var walkRight: [SKTexture]
     var walkLeft: [SKTexture]
     var hasArmor: Bool = false
+    var hasMango: Bool = false
     
     init(imageNamed: String) {
         
@@ -44,8 +47,16 @@ class PlayerClass: SKSpriteNode {
     }
     
     func updateWalkAnimations(powerUp: String) {
+//        self.removeAllActions()
+                
         walkRight = [SKTexture(imageNamed: "\(animationName)-walk-right-1"), SKTexture(imageNamed: "\(animationName)-walk-right-2"), SKTexture(imageNamed: "\(animationName)-walk-right-3"), SKTexture(imageNamed: "\(animationName)-walk-right-2")]
         walkLeft = [SKTexture(imageNamed: "\(animationName)-walk-left-1"), SKTexture(imageNamed: "\(animationName)-walk-left-2"), SKTexture(imageNamed: "\(animationName)-walk-left-3"), SKTexture(imageNamed: "\(animationName)-walk-left-2")]
+        
+        if isMovingLeft {
+            self.walkLeftAnimation()
+        } else if isMovingRight {
+            self.walkRightAnimation()
+        }
     }
     
 }
