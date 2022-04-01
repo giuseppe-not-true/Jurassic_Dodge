@@ -73,7 +73,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if counter >= 5 {
             counter -= 5
             
-            if spawnTime > 0.2 {
+            if spawnTime > 0.3 {
                 spawnTime -= 0.2
                 updateMeteorsCycle()
             }
