@@ -271,6 +271,7 @@ extension GameScene {
     private func newMeteor(at position: CGPoint) {
         let newMeteor = SKSpriteNode(imageNamed: "enemy-meteor")
         newMeteor.name = "meteor"
+        newMeteor.speed = 0.1
         newMeteor.position = position
         newMeteor.zPosition = entitieszPos
         
@@ -314,8 +315,14 @@ extension GameScene {
             }
             
             if let player = secondBody.node, player.name == "player" {
-                if self.player.lives > 0 {
-                    updateLives(update: -1)
+                if self.player.hasArmor {
+                    self.player.hasArmor = false
+                    self.player.animationName = "none"
+                    self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                } else {
+                    if self.player.lives > 0 {
+                        updateLives(update: -1)
+                    }
                 }
                 
                 node.removeFromParent()
@@ -337,8 +344,14 @@ extension GameScene {
             }
             
             if let player = firstBody.node, player.name == "player" {
-                if self.player.lives > 0 {
-                    updateLives(update: -1)
+                if self.player.hasArmor {
+                    self.player.hasArmor = false
+                    self.player.animationName = "none"
+                    self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                } else {
+                    if self.player.lives > 0 {
+                        updateLives(update: -1)
+                    }
                 }
                 
                 node.removeFromParent()
@@ -423,6 +436,11 @@ extension GameScene {
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                                     self.player.speed /= 2
                                     self.player.hasMango = false
+                                    if self.player.hasArmor {
+                                        self.player.animationName = "armor"
+                                    } else {
+                                        self.player.animationName = "none"
+                                    }
                                     self.player.updateWalkAnimations(powerUp: self.player.animationName)
                                 }
 
@@ -445,6 +463,7 @@ extension GameScene {
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                                     self.player.speed /= 2
                                     self.player.hasMango = false
+                                    self.player.animationName = "none"
                                     self.player.updateWalkAnimations(powerUp: self.player.animationName)
                                 }
                             }
@@ -539,6 +558,12 @@ extension GameScene {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                                 self.player.speed /= 2
                                 self.player.hasMango = false
+                                if self.player.hasArmor {
+                                    self.player.animationName = "armor"
+                                } else {
+                                    self.player.animationName = "none"
+                                }
+                                self.player.updateWalkAnimations(powerUp: self.player.animationName)
                             }
 
                         } else {
@@ -560,6 +585,8 @@ extension GameScene {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                                 self.player.speed /= 2
                                 self.player.hasMango = false
+                                self.player.animationName = "none"
+                                self.player.updateWalkAnimations(powerUp: self.player.animationName)
                             }
                         }
                         break

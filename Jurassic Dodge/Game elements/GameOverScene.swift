@@ -37,7 +37,7 @@ class GameOverScene: SKScene {
         addChild(finalScore)
         
         restartButton.name = "restartButton"
-        restartButton.size = CGSize(width: 50.0, height: 50.0)
+        restartButton.size = CGSize(width: 150.0, height: 100.0)
         restartButton.position = CGPoint(x: size.width / 2, y: size.height / 2)
         
         addChild(restartButton)
