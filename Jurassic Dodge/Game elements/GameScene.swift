@@ -263,8 +263,8 @@ extension GameScene {
         let positionX = CGFloat.random(in: initialX...finalX)
         let positionY = UIScreen.main.bounds.maxY
         
-        return CGPoint(x: 0, y: positionY)
-//        return CGPoint(x: positionX, y: positionY)
+//        return CGPoint(x: 0, y: positionY)
+        return CGPoint(x: positionX, y: positionY)
 
     }
     
