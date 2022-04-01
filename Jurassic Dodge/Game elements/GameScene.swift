@@ -29,6 +29,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     @ObservedObject var gameLogic: GameLogic = GameLogic.shared
     
+    var waitAction = SKAction()
+    var meteorCycleAction = SKAction()
     var bg: SKSpriteNode!
     var ground: SKNode!
     
@@ -49,6 +51,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Keeps track of when the last update happend.
     // Used to calculate how much time has passed between updates.
     var lastUpdate: TimeInterval = 0
+    var spawnTime = 2.0
+    var counter = 0
     
     override func didMove(to view: SKView) {
         self.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
@@ -64,6 +68,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if isMovingToTheLeft {
             self.moveLeft()
+        }
+        
+        if counter >= 5 {
+            counter -= 5
+            
+            if spawnTime > 0.2 {
+                spawnTime -= 0.2
+                updateMeteorsCycle()
+            }
+            
+            if self.player.speed <= 20 {
+                self.player.speed += 1
+            }
         }
         
         if self.player.lives == 0 {
@@ -148,13 +165,22 @@ extension GameScene {
     }
     
     func startMeteorsCycle() {
-        let createMeteorAction = SKAction.run(createMeteor)
-        let waitAction = SKAction.wait(forDuration: 2.0)
+        var createMeteorAction = SKAction.run(createMeteor)
+        self.waitAction = SKAction.wait(forDuration: spawnTime)
         
-        let createAndWaitAction = SKAction.sequence([createMeteorAction, waitAction])
-        let meteorCycleAction = SKAction.repeatForever(createAndWaitAction)
+        var createAndWaitAction = SKAction.sequence([createMeteorAction, waitAction])
+        self.meteorCycleAction = SKAction.repeatForever(createAndWaitAction)
         
-        run(meteorCycleAction)
+        run(self.meteorCycleAction, withKey: "MeteorCycle")
+    }
+    
+    func updateMeteorsCycle() {
+        removeAction(forKey: "MeteorCycle")
+        var createMeteorAction = SKAction.run(createMeteor)
+        self.waitAction = SKAction.wait(forDuration: spawnTime)
+        var createAndWaitAction = SKAction.sequence([createMeteorAction, waitAction])
+        self.meteorCycleAction = SKAction.repeatForever(createAndWaitAction)
+        run(self.meteorCycleAction, withKey: "MeteorCycle")
     }
     
     private func setLives() {
@@ -303,6 +329,7 @@ extension GameScene {
         if let node = firstBody.node, node.name == "meteor" {
             if let ground = firstBody.node, ground.name == "ground" {
                 self.gameLogic.score(points: 1)
+                self.counter += 1
                 self.score.text = "Score: \(self.gameLogic.currentScore)"
                 let tempNode = MeteorClass()
                 
@@ -317,7 +344,7 @@ extension GameScene {
             if let player = secondBody.node, player.name == "player" {
                 if self.player.hasArmor {
                     self.player.hasArmor = false
-                    self.player.animationName = "none"
+                    self.player.animationName = "dino"
                     self.player.updateWalkAnimations(powerUp: self.player.animationName)
                 } else {
                     if self.player.lives > 0 {
@@ -333,6 +360,7 @@ extension GameScene {
         if let node = secondBody.node, node.name == "meteor" {
             if let ground = firstBody.node, ground.name == "ground" {
                 self.gameLogic.score(points: 1)
+                self.counter += 1
                 self.score.text = "Score: \(self.gameLogic.currentScore)"
                 let tempNode = MeteorClass()
                 
@@ -346,7 +374,7 @@ extension GameScene {
             if let player = firstBody.node, player.name == "player" {
                 if self.player.hasArmor {
                     self.player.hasArmor = false
-                    self.player.animationName = "none"
+                    self.player.animationName = "dino"
                     self.player.updateWalkAnimations(powerUp: self.player.animationName)
                 } else {
                     if self.player.lives > 0 {
@@ -371,6 +399,7 @@ extension GameScene {
                         switch(self.player.hasArmor) {
                         case true:
                             self.gameLogic.score(points: 2)
+                            self.counter += 2
                             self.score.text = "Score: \(self.gameLogic.currentScore)"
                             break
                         case false:
@@ -414,6 +443,7 @@ extension GameScene {
                         switch(self.player.hasMango) {
                         case true:
                             self.gameLogic.score(points: 2)
+                            self.counter += 2
                             self.score.text = "Score: \(self.gameLogic.currentScore)"
                             break
                         case false:
@@ -432,14 +462,14 @@ extension GameScene {
                                         self.player.isMovingRight = false
                                     }
                                 }
-                                self.player.speed *= 2
+                                self.player.speed *= 1.5
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                                    self.player.speed /= 2
+                                    self.player.speed /= 1.5
                                     self.player.hasMango = false
                                     if self.player.hasArmor {
                                         self.player.animationName = "armor"
                                     } else {
-                                        self.player.animationName = "none"
+                                        self.player.animationName = "dino"
                                     }
                                     self.player.updateWalkAnimations(powerUp: self.player.animationName)
                                 }
@@ -459,11 +489,11 @@ extension GameScene {
                                         self.player.isMovingRight = false
                                     }
                                 }
-                                self.player.speed *= 2
+                                self.player.speed *= 1.5
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                                    self.player.speed /= 2
+                                    self.player.speed /= 1.5
                                     self.player.hasMango = false
-                                    self.player.animationName = "none"
+                                    self.player.animationName = "dino"
                                     self.player.updateWalkAnimations(powerUp: self.player.animationName)
                                 }
                             }
@@ -493,6 +523,7 @@ extension GameScene {
                     switch(self.player.hasArmor) {
                     case true:
                         self.gameLogic.score(points: 2)
+                        self.counter += 2
                         self.score.text = "Score: \(self.gameLogic.currentScore)"
                         break
                     case false:
@@ -536,6 +567,7 @@ extension GameScene {
                     switch(self.player.hasMango) {
                     case true:
                         self.gameLogic.score(points: 2)
+                        self.counter += 2
                         self.score.text = "Score: \(self.gameLogic.currentScore)"
                         break
                     case false:
@@ -554,14 +586,14 @@ extension GameScene {
                                     self.player.isMovingRight = false
                                 }
                             }
-                            self.player.speed *= 2
+                            self.player.speed *= 1.5
                             DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                                self.player.speed /= 2
+                                self.player.speed /= 1.5
                                 self.player.hasMango = false
                                 if self.player.hasArmor {
                                     self.player.animationName = "armor"
                                 } else {
-                                    self.player.animationName = "none"
+                                    self.player.animationName = "dino"
                                 }
                                 self.player.updateWalkAnimations(powerUp: self.player.animationName)
                             }
@@ -581,11 +613,11 @@ extension GameScene {
                                     self.player.isMovingRight = false
                                 }
                             }
-                            self.player.speed *= 2
+                            self.player.speed *= 1.5
                             DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                                self.player.speed /= 2
+                                self.player.speed /= 1.5
                                 self.player.hasMango = false
-                                self.player.animationName = "none"
+                                self.player.animationName = "dino"
                                 self.player.updateWalkAnimations(powerUp: self.player.animationName)
                             }
                         }
