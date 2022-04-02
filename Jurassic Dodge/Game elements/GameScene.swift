@@ -393,6 +393,9 @@ extension GameScene {
                     case .heart:
                         if self.player.lives < 3 {
                             updateLives(update: 1)
+                        } else {
+                            self.gameLogic.score(points: 2)
+                            self.counter += 2
                         }
                         break
                     case .armor:
@@ -517,6 +520,9 @@ extension GameScene {
                 case .heart:
                     if self.player.lives < 3 {
                         updateLives(update: 1)
+                    } else {
+                        self.gameLogic.score(points: 2)
+                        self.counter += 2
                     }
                     break
                 case .armor:
