@@ -7,13 +7,21 @@
 
 import Foundation
 import SpriteKit
+import SwiftUI
 
 class MeteorClass: SKSpriteNode {
+    @ObservedObject var gameLogic: GameLogic = GameLogic.shared
     var powerUp = PowerUpType.none
     var powerUpName = "none"
     
     func randomPowerUp() {
-        let random = Int.random(in: 1 ... 10)
+        var maxrand = self.gameLogic.currentScore / 4
+        
+        if maxrand <= 8 {
+            maxrand = 8
+        }
+        
+        let random = Int.random(in: 1 ... Int(maxrand))
         
         switch(random) {
         case 1:

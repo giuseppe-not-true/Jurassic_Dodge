@@ -70,16 +70,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.moveLeft()
         }
         
-        if counter >= 5 {
-            counter -= 5
-            
-            if spawnTime > 0.3 {
-                spawnTime -= 0.2
-                updateMeteorsCycle()
+        if (self.gameLogic.currentScore < 50) {
+            if counter >= 5 {
+                counter -= 5
+                
+                if spawnTime > 0.3 {
+                    spawnTime -= 0.2
+                    updateMeteorsCycle()
+                }
+                
+                if self.player.speed <= 20 {
+                    self.player.speed += 0.75
+                }
             }
-            
-            if self.player.speed <= 20 {
-                self.player.speed += 1
+        }
+        else {
+            if counter >= 25 {
+                counter -= 25
+                if spawnTime > 0.10005 {
+                    spawnTime -= 0.001
+                    updateMeteorsCycle()
+                }
             }
         }
         
@@ -286,8 +297,39 @@ extension GameScene {
         let initialX: CGFloat = -self.frame.width * 0.45
         let finalX: CGFloat = self.frame.width * 0.45
         
-        let positionX = CGFloat.random(in: initialX...finalX)
-        let positionY = UIScreen.main.bounds.maxY
+        var range = (self.player.speed * 5) * 2
+        
+        var adjleftX: CGFloat = 0
+        var adjrightX: CGFloat = 0
+        
+        if(CGFloat(self.player.position.x) - (range / 2) <= initialX) {
+            adjleftX = initialX
+        }
+        else {
+            adjleftX = CGFloat(self.player.position.x) - (range / 2)
+        }
+        
+        if(CGFloat(self.player.position.x) + (range / 2)  >= finalX) {
+            adjrightX = finalX
+        }
+        else {
+            adjrightX = CGFloat(self.player.position.x) + (range / 2)
+        }
+        
+        var positionX = CGFloat.random(in: initialX...finalX)
+        let positionY = UIScreen.main.bounds.maxY - 130
+        
+        if (Int.random(in: 1 ... 100) < 66) {
+            positionX = CGFloat.random(in: adjleftX...adjrightX)
+        }
+        else {
+            if (CGFloat(self.player.position.x) - (range / 2) <= initialX) {
+                positionX = CGFloat.random(in: adjrightX...finalX)
+            }
+            if (CGFloat(self.player.position.x) + (range / 2)  >= finalX) {
+                positionX = CGFloat.random(in: initialX...adjleftX)
+            }
+        }
         
 //        return CGPoint(x: 0, y: positionY)
         return CGPoint(x: positionX, y: positionY)
@@ -296,6 +338,7 @@ extension GameScene {
     
     private func newMeteor(at position: CGPoint) {
         let newMeteor = SKSpriteNode(imageNamed: "enemy-meteor")
+        
         newMeteor.name = "meteor"
         newMeteor.speed = 0.1
         newMeteor.position = position
