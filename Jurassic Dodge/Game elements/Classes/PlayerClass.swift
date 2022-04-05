@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import SpriteKit
 
 class PlayerClass: SKSpriteNode {
@@ -14,12 +15,16 @@ class PlayerClass: SKSpriteNode {
     var animationName = "dino"
     var isMovingLeft = false
     var isMovingRight = false
+    var isMovingTowards : CGFloat = 0
     var walkRight: [SKTexture]
     var walkLeft: [SKTexture]
+    var idle: SKTexture
     var hasArmor: Bool = false
     var hasMango: Bool = false
     
     init(imageNamed: String) {
+        
+        idle = SKTexture(imageNamed: "\(animationName)-front")
         
         walkRight = [SKTexture(imageNamed: "\(animationName)-walk-right-1"), SKTexture(imageNamed: "\(animationName)-walk-right-2"), SKTexture(imageNamed: "\(animationName)-walk-right-3"), SKTexture(imageNamed: "\(animationName)-walk-right-2")]
             
@@ -46,17 +51,29 @@ class PlayerClass: SKSpriteNode {
         self.run(walk)
     }
     
+    func idleAnimation() {
+        let idleAction = SKAction.animate(with: [idle], timePerFrame: 1.5)
+        let idle = SKAction.repeatForever(idleAction)
+        self.run(idle)
+    }
+    
     func updateWalkAnimations(powerUp: String) {
 //        self.removeAllActions()
                 
         walkRight = [SKTexture(imageNamed: "\(animationName)-walk-right-1"), SKTexture(imageNamed: "\(animationName)-walk-right-2"), SKTexture(imageNamed: "\(animationName)-walk-right-3"), SKTexture(imageNamed: "\(animationName)-walk-right-2")]
         walkLeft = [SKTexture(imageNamed: "\(animationName)-walk-left-1"), SKTexture(imageNamed: "\(animationName)-walk-left-2"), SKTexture(imageNamed: "\(animationName)-walk-left-3"), SKTexture(imageNamed: "\(animationName)-walk-left-2")]
+        idle = SKTexture(imageNamed: "\(animationName)-front")
         
-        if isMovingLeft {
+        if (isMovingLeft == true && isMovingRight == false) {
             self.walkLeftAnimation()
-        } else if isMovingRight {
+        }
+        if (isMovingRight == true && isMovingLeft == false) {
             self.walkRightAnimation()
         }
+        if (isMovingRight == false && isMovingRight == false) {
+            self.idleAnimation()
+        }
+        
     }
     
 }
