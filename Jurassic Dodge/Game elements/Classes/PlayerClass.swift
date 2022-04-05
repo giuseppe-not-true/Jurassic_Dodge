@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftUI
 import SpriteKit
 
 class PlayerClass: SKSpriteNode {
@@ -15,7 +14,7 @@ class PlayerClass: SKSpriteNode {
     var animationName = "dino"
     var isMovingLeft = false
     var isMovingRight = false
-    var isMovingTowards : CGFloat = 0
+    //var isMovingTowards : CGFloat = 0
     var walkRight: [SKTexture]
     var walkLeft: [SKTexture]
     var idle: SKTexture
@@ -70,9 +69,9 @@ class PlayerClass: SKSpriteNode {
         if (isMovingRight == true && isMovingLeft == false) {
             self.walkRightAnimation()
         }
-        if (isMovingRight == false && isMovingRight == false) {
-            self.idleAnimation()
-        }
+//        if (isMovingRight == false && isMovingRight == false) {
+//            self.idleAnimation()
+//        }
         
     }
     

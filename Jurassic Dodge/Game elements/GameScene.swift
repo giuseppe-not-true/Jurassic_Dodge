@@ -43,7 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var isMovingToTheRight: Bool = false
     var isMovingToTheLeft: Bool = false
-    var arrivedAtDestination: Bool = false
+    //var arrivedAtDestination: Bool = false
     
     var entitieszPos = 10.0
     var UIzPos = 11.0
@@ -64,16 +64,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         if isMovingToTheRight {
-            self.moveRight(to: self.player.isMovingTowards)
+            self.moveRight()
         }
         
         if isMovingToTheLeft {
-            self.moveLeft(to: self.player.isMovingTowards)
+            self.moveLeft()
         }
         
-        if arrivedAtDestination {
-            self.stop()
-        }
+//        if arrivedAtDestination {
+//            self.stop()
+//        }
         
         if (self.gameLogic.currentScore < 50) {
             if counter >= 5 {
@@ -228,17 +228,17 @@ extension GameScene {
 
 // MARK: - Player Movement
 extension GameScene {
-    private func moveLeft(to: CGFloat) {
+    private func moveLeft() {
         
-        let action = SKAction.move(to: CGPoint(x: to, y: self.player.position.y), duration: getDuration(pointA: self.player.position, pointB: CGPoint(x: to, y: self.player.position.y), speed: self.player.speed))
+        let action = SKAction.move(to: CGPoint(x: -self.frame.width*0.45, y: self.player.position.y), duration: getDuration(pointA: self.player.position, pointB: CGPoint(x: -self.frame.width*0.45, y: self.player.position.y), speed: self.player.speed))
         self.player.walkLeftAnimation()
         self.player.run(action, withKey: "move-left")
 
     }
     
-    private func moveRight(to: CGFloat) {
+    private func moveRight() {
         
-        let action = SKAction.move(to: CGPoint(x: to, y: self.player.position.y), duration: getDuration(pointA: self.player.position, pointB: CGPoint(x: to, y: self.player.position.y), speed: self.player.speed))
+        let action = SKAction.move(to: CGPoint(x: self.frame.width*0.45, y: self.player.position.y), duration: getDuration(pointA: self.player.position, pointB: CGPoint(x: self.frame.width*0.45, y: self.player.position.y), speed: self.player.speed))
         self.player.walkRightAnimation()
         self.player.run(action, withKey: "move-right")
         
@@ -286,7 +286,6 @@ extension GameScene {
         case .left:
             self.isMovingToTheLeft = true
         }
-        self.player.isMovingTowards = touchLocation.x
         
     }
     
