@@ -57,7 +57,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var cam = SKCameraNode()
     
-    let meteorSound = SKAction.playSoundFileNamed("meteor.wav", waitForCompletion: false)
+    let meteorSound = SKAction.playSoundFileNamed("meteor.wav", waitForCompletion: true)
+    let hitSound = SKAction.playSoundFileNamed("roger-hit.wav", waitForCompletion: true)
     
     override func didMove(to view: SKView) {
         self.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
@@ -403,7 +404,7 @@ extension GameScene {
                     newPowerUp(at: CGPoint(x: node.position.x, y: self.player.position.y), powerUpName: tempNode.powerUpName)
                 }
                 
-                ground.run(meteorSound)
+//                ground.run(meteorSound)
                 node.removeFromParent()
             }
             
@@ -418,6 +419,7 @@ extension GameScene {
                     }
                 }
                 
+                ground.run(hitSound)
                 node.removeFromParent()
             }
             
@@ -435,7 +437,7 @@ extension GameScene {
                     newPowerUp(at: CGPoint(x: node.position.x, y: self.player.position.y), powerUpName: tempNode.powerUpName)
                 }
                 
-                ground.run(meteorSound)
+//                ground.run(meteorSound)
                 node.removeFromParent()
             }
             
@@ -450,6 +452,7 @@ extension GameScene {
                     }
                 }
                 
+                ground.run(hitSound)
                 node.removeFromParent()
             }
             
