@@ -54,12 +54,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var lastUpdate: TimeInterval = 0
     var spawnTime = 2.0
     var counter = 0
-    
+    var cam = SKCameraNode()
     override func didMove(to view: SKView) {
         self.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-
+        
         self.setUpGame()
         self.setUpPhysicsWorld()
+        cam.position = CGPoint(x: bg.position.x , y: bg.position.y )
+        addChild(cam)
+        self.camera = cam
+
+
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -131,9 +136,9 @@ extension GameScene {
     private func createBackground() {
         bg = SKSpriteNode(imageNamed: "background")
         bg.name = "background"
-        bg.position = CGPoint(x: 0, y: 30)
-        bg.size.width *= 2
-        bg.size.height *= 2
+//        bg.position = CGPoint(x: 500, y: 500)
+        bg.size.width *= 1
+        bg.size.height *= 1.1
         bg.zPosition = bgzPos
         
         addChild(bg)
@@ -220,7 +225,7 @@ extension GameScene {
         score.fontName = "Hawai"
         score.fontSize = 50
         score.fontColor = .white
-        score.position = CGPoint(x: 0, y: self.size.height*0.35)
+        score.position = CGPoint(x: self.size.width*0.35, y: self.size.height*0.35)
         score.zPosition = UIzPos
         addChild(score)
     }
@@ -282,6 +287,7 @@ extension GameScene {
         
         switch sideTouched(for: touchLocation) {
         case .right:
+            
             self.isMovingToTheRight = true
         case .left:
             self.isMovingToTheLeft = true
@@ -291,10 +297,7 @@ extension GameScene {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.isMovingToTheRight = false
-//        self.player.removeAction(forKey: "move-left")
         self.isMovingToTheLeft = false
-//        self.player.removeAction(forKey: "move-right")
-        //Here?
         
     }
     
