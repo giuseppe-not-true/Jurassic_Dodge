@@ -59,6 +59,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let meteorSound = SKAction.playSoundFileNamed("meteor.wav", waitForCompletion: true)
     let hitSound = SKAction.playSoundFileNamed("roger-hit.wav", waitForCompletion: true)
+    let armorSound = SKAction.playSoundFileNamed("armor.mp3", waitForCompletion: true)
+    let mangoSound = SKAction.playSoundFileNamed("mango.wav", waitForCompletion: true)
+    let healthSound = SKAction.playSoundFileNamed("health.wav", waitForCompletion: true)
     
     override func didMove(to view: SKView) {
         self.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
@@ -462,6 +465,7 @@ extension GameScene {
             if let powerUp = secondBody.node as? PowerUpClass, powerUp.name == "power-up" {
                     switch(powerUp.powerUpType) {
                     case .heart:
+                        ground.run(healthSound)
                         if self.player.lives < 3 {
                             updateLives(update: 1)
                         } else {
@@ -470,6 +474,7 @@ extension GameScene {
                         }
                         break
                     case .armor:
+                        ground.run(armorSound)
                         switch(self.player.hasArmor) {
                         case true:
                             self.gameLogic.score(points: 2)
@@ -514,6 +519,7 @@ extension GameScene {
                         }
                         break
                     case .mango:
+                        ground.run(mangoSound)
                         switch(self.player.hasMango) {
                         case true:
                             self.gameLogic.score(points: 2)
@@ -589,6 +595,7 @@ extension GameScene {
             if let powerUp = firstBody.node as? PowerUpClass, powerUp.name == "power-up" {
                 switch(powerUp.powerUpType) {
                 case .heart:
+                    ground.run(healthSound)
                     if self.player.lives < 3 {
                         updateLives(update: 1)
                     } else {
@@ -597,6 +604,7 @@ extension GameScene {
                     }
                     break
                 case .armor:
+                    ground.run(armorSound)
                     switch(self.player.hasArmor) {
                     case true:
                         self.gameLogic.score(points: 2)
@@ -641,6 +649,7 @@ extension GameScene {
                     }
                     break
                 case .mango:
+                    ground.run(mangoSound)
                     switch(self.player.hasMango) {
                     case true:
                         self.gameLogic.score(points: 2)

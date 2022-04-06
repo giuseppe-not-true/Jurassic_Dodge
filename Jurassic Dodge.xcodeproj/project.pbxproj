@@ -28,7 +28,7 @@
 		D2370D1A27FDCEB000CC4BDF /* roger-dead.wav in Resources */ = {isa = PBXBuildFile; fileRef = D2370D1927FDCEB000CC4BDF /* roger-dead.wav */; };
 		D2370D1C27FDCEB800CC4BDF /* roger-hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = D2370D1B27FDCEB800CC4BDF /* roger-hit.wav */; };
 		D2370D1E27FDCEC100CC4BDF /* mango.wav in Resources */ = {isa = PBXBuildFile; fileRef = D2370D1D27FDCEC100CC4BDF /* mango.wav */; };
-		D2370D2027FDCECC00CC4BDF /* heart.wav in Resources */ = {isa = PBXBuildFile; fileRef = D2370D1F27FDCECC00CC4BDF /* heart.wav */; };
+		D2370D2027FDCECC00CC4BDF /* health.wav in Resources */ = {isa = PBXBuildFile; fileRef = D2370D1F27FDCECC00CC4BDF /* health.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,7 +55,7 @@
 		D2370D1927FDCEB000CC4BDF /* roger-dead.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "roger-dead.wav"; sourceTree = "<group>"; };
 		D2370D1B27FDCEB800CC4BDF /* roger-hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "roger-hit.wav"; sourceTree = "<group>"; };
 		D2370D1D27FDCEC100CC4BDF /* mango.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = mango.wav; sourceTree = "<group>"; };
-		D2370D1F27FDCECC00CC4BDF /* heart.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = heart.wav; sourceTree = "<group>"; };
+		D2370D1F27FDCECC00CC4BDF /* health.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = health.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,7 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				D2370D1527FDCE0E00CC4BDF /* armor.mp3 */,
-				D2370D1F27FDCECC00CC4BDF /* heart.wav */,
+				D2370D1F27FDCECC00CC4BDF /* health.wav */,
 				D2370D1D27FDCEC100CC4BDF /* mango.wav */,
 				D2370D1727FDCE9B00CC4BDF /* meteor.wav */,
 				D2370D1927FDCEB000CC4BDF /* roger-dead.wav */,
@@ -222,7 +222,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2370D1427FDC11900CC4BDF /* Minecraft.ttf in Resources */,
-				D2370D2027FDCECC00CC4BDF /* heart.wav in Resources */,
+				D2370D2027FDCECC00CC4BDF /* health.wav in Resources */,
 				D2370D1E27FDCEC100CC4BDF /* mango.wav in Resources */,
 				235C893D27F468180081CA52 /* Preview Assets.xcassets in Resources */,
 				D2370D1C27FDCEB800CC4BDF /* roger-hit.wav in Resources */,
