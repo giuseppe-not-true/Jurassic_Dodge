@@ -23,6 +23,12 @@
 		23CEF1B927F4714B0020D57E /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CEF1B727F4714B0020D57E /* GameLogic.swift */; };
 		23CEF1BA27F4714B0020D57E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 23CEF1B827F4714B0020D57E /* GameScene.sks */; };
 		D2370D1427FDC11900CC4BDF /* Minecraft.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D2370D1327FDC11900CC4BDF /* Minecraft.ttf */; };
+		D2370D1627FDCE0E00CC4BDF /* armor.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D2370D1527FDCE0E00CC4BDF /* armor.mp3 */; };
+		D2370D1827FDCE9B00CC4BDF /* meteor.wav in Resources */ = {isa = PBXBuildFile; fileRef = D2370D1727FDCE9B00CC4BDF /* meteor.wav */; };
+		D2370D1A27FDCEB000CC4BDF /* roger-dead.wav in Resources */ = {isa = PBXBuildFile; fileRef = D2370D1927FDCEB000CC4BDF /* roger-dead.wav */; };
+		D2370D1C27FDCEB800CC4BDF /* roger-hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = D2370D1B27FDCEB800CC4BDF /* roger-hit.wav */; };
+		D2370D1E27FDCEC100CC4BDF /* mango.wav in Resources */ = {isa = PBXBuildFile; fileRef = D2370D1D27FDCEC100CC4BDF /* mango.wav */; };
+		D2370D2027FDCECC00CC4BDF /* heart.wav in Resources */ = {isa = PBXBuildFile; fileRef = D2370D1F27FDCECC00CC4BDF /* heart.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +50,12 @@
 		23CEF1B727F4714B0020D57E /* GameLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLogic.swift; sourceTree = "<group>"; };
 		23CEF1B827F4714B0020D57E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		D2370D1327FDC11900CC4BDF /* Minecraft.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Minecraft.ttf; sourceTree = "<group>"; };
+		D2370D1527FDCE0E00CC4BDF /* armor.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = armor.mp3; sourceTree = "<group>"; };
+		D2370D1727FDCE9B00CC4BDF /* meteor.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = meteor.wav; sourceTree = "<group>"; };
+		D2370D1927FDCEB000CC4BDF /* roger-dead.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "roger-dead.wav"; sourceTree = "<group>"; };
+		D2370D1B27FDCEB800CC4BDF /* roger-hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "roger-hit.wav"; sourceTree = "<group>"; };
+		D2370D1D27FDCEC100CC4BDF /* mango.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = mango.wav; sourceTree = "<group>"; };
+		D2370D1F27FDCECC00CC4BDF /* heart.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = heart.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +93,7 @@
 				235C893727F468160081CA52 /* ContentView.swift */,
 				23B6229427F6695C00649DAA /* MenuView.swift */,
 				23AF82C527F6E6A100679CC5 /* Fonts */,
+				D2370D2127FDCED700CC4BDF /* Audio */,
 				23B8412D27F4FEDB009FA6C2 /* Game elements */,
 				23CEF1B827F4714B0020D57E /* GameScene.sks */,
 				235C893927F468180081CA52 /* Assets.xcassets */,
@@ -135,6 +148,19 @@
 				23B8413427F4FF10009FA6C2 /* Constants.swift */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D2370D2127FDCED700CC4BDF /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				D2370D1527FDCE0E00CC4BDF /* armor.mp3 */,
+				D2370D1F27FDCECC00CC4BDF /* heart.wav */,
+				D2370D1D27FDCEC100CC4BDF /* mango.wav */,
+				D2370D1727FDCE9B00CC4BDF /* meteor.wav */,
+				D2370D1927FDCEB000CC4BDF /* roger-dead.wav */,
+				D2370D1B27FDCEB800CC4BDF /* roger-hit.wav */,
+			);
+			path = Audio;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,11 +222,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2370D1427FDC11900CC4BDF /* Minecraft.ttf in Resources */,
+				D2370D2027FDCECC00CC4BDF /* heart.wav in Resources */,
+				D2370D1E27FDCEC100CC4BDF /* mango.wav in Resources */,
 				235C893D27F468180081CA52 /* Preview Assets.xcassets in Resources */,
+				D2370D1C27FDCEB800CC4BDF /* roger-hit.wav in Resources */,
+				D2370D1A27FDCEB000CC4BDF /* roger-dead.wav in Resources */,
+				D2370D1827FDCE9B00CC4BDF /* meteor.wav in Resources */,
 				23CEF1BA27F4714B0020D57E /* GameScene.sks in Resources */,
 				23AF82C227F6E67400679CC5 /* Speedway.ttf in Resources */,
 				23AF82C427F6E69E00679CC5 /* Hawai.ttf in Resources */,
 				235C893A27F468180081CA52 /* Assets.xcassets in Resources */,
+				D2370D1627FDCE0E00CC4BDF /* armor.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,7 +381,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Jurassic Dodge/Preview Content\"";
-				DEVELOPMENT_TEAM = J92848C73R;
+				DEVELOPMENT_TEAM = ZG6YUNQKKA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Jurassic-Dodge-Info.plist";
@@ -381,7 +413,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Jurassic Dodge/Preview Content\"";
-				DEVELOPMENT_TEAM = J92848C73R;
+				DEVELOPMENT_TEAM = ZG6YUNQKKA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Jurassic-Dodge-Info.plist";
