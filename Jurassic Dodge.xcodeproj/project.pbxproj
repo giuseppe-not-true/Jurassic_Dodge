@@ -22,6 +22,7 @@
 		23B8413527F4FF10009FA6C2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B8413427F4FF10009FA6C2 /* Constants.swift */; };
 		23CEF1B927F4714B0020D57E /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CEF1B727F4714B0020D57E /* GameLogic.swift */; };
 		23CEF1BA27F4714B0020D57E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 23CEF1B827F4714B0020D57E /* GameScene.sks */; };
+		D22F752427FE147F0052BC9E /* meteor shower.wav in Resources */ = {isa = PBXBuildFile; fileRef = D22F752327FE147F0052BC9E /* meteor shower.wav */; };
 		D2370D1427FDC11900CC4BDF /* Minecraft.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D2370D1327FDC11900CC4BDF /* Minecraft.ttf */; };
 		D2370D1627FDCE0E00CC4BDF /* armor.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D2370D1527FDCE0E00CC4BDF /* armor.mp3 */; };
 		D2370D1827FDCE9B00CC4BDF /* meteor.wav in Resources */ = {isa = PBXBuildFile; fileRef = D2370D1727FDCE9B00CC4BDF /* meteor.wav */; };
@@ -49,6 +50,7 @@
 		23B8413427F4FF10009FA6C2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		23CEF1B727F4714B0020D57E /* GameLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLogic.swift; sourceTree = "<group>"; };
 		23CEF1B827F4714B0020D57E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		D22F752327FE147F0052BC9E /* meteor shower.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "meteor shower.wav"; sourceTree = "<group>"; };
 		D2370D1327FDC11900CC4BDF /* Minecraft.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Minecraft.ttf; sourceTree = "<group>"; };
 		D2370D1527FDCE0E00CC4BDF /* armor.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = armor.mp3; sourceTree = "<group>"; };
 		D2370D1727FDCE9B00CC4BDF /* meteor.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = meteor.wav; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 		D2370D2127FDCED700CC4BDF /* Audio */ = {
 			isa = PBXGroup;
 			children = (
+				D22F752327FE147F0052BC9E /* meteor shower.wav */,
 				D2370D1527FDCE0E00CC4BDF /* armor.mp3 */,
 				D2370D1F27FDCECC00CC4BDF /* health.wav */,
 				D2370D1D27FDCEC100CC4BDF /* mango.wav */,
@@ -233,6 +236,7 @@
 				23AF82C427F6E69E00679CC5 /* Hawai.ttf in Resources */,
 				235C893A27F468180081CA52 /* Assets.xcassets in Resources */,
 				D2370D1627FDCE0E00CC4BDF /* armor.mp3 in Resources */,
+				D22F752427FE147F0052BC9E /* meteor shower.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

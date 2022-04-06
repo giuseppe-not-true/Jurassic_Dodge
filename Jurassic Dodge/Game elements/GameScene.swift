@@ -57,6 +57,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var cam = SKCameraNode()
     
+    let backgroundMusic = SKAudioNode(fileNamed: "meteor shower.wav")
     let meteorSound = SKAction.playSoundFileNamed("meteor.wav", waitForCompletion: true)
     let hitSound = SKAction.playSoundFileNamed("roger-hit.wav", waitForCompletion: true)
     let armorSound = SKAction.playSoundFileNamed("armor.mp3", waitForCompletion: true)
@@ -167,6 +168,7 @@ extension GameScene {
         ground.physicsBody?.contactTestBitMask = PhysicsCategory.meteor
         
         addChild(ground)
+        self.addChild(backgroundMusic)
     }
     
     private func createPlayer(initPos: CGPoint) {
@@ -295,7 +297,6 @@ extension GameScene {
         
         switch sideTouched(for: touchLocation) {
         case .right:
-            
             self.isMovingToTheRight = true
         case .left:
             self.isMovingToTheLeft = true
@@ -792,6 +793,7 @@ extension GameScene {
 
 extension GameScene {
     private func gameOverDisplay() {
+        backgroundMusic.run(SKAction.stop())
         let gameOverScene = GameOverScene(size: size)
         gameOverScene.scaleMode = scaleMode
         
