@@ -222,10 +222,10 @@ extension GameScene {
     private func setScore() {
         score = SKLabelNode(text: "Score: \(self.gameLogic.currentScore)")
         score.name = "score"
-        score.fontName = "Hawai"
+        score.fontName = "Minecraft"
         score.fontSize = 50
         score.fontColor = .white
-        score.position = CGPoint(x: self.size.width*0.35, y: self.size.height*0.35)
+        score.position = CGPoint(x: self.size.width*0.30, y: self.size.height*0.35)
         score.zPosition = UIzPos
         addChild(score)
     }

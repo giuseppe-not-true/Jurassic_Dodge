@@ -22,6 +22,7 @@
 		23B8413527F4FF10009FA6C2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B8413427F4FF10009FA6C2 /* Constants.swift */; };
 		23CEF1B927F4714B0020D57E /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CEF1B727F4714B0020D57E /* GameLogic.swift */; };
 		23CEF1BA27F4714B0020D57E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 23CEF1B827F4714B0020D57E /* GameScene.sks */; };
+		D2370D1427FDC11900CC4BDF /* Minecraft.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D2370D1327FDC11900CC4BDF /* Minecraft.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		23B8413427F4FF10009FA6C2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		23CEF1B727F4714B0020D57E /* GameLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLogic.swift; sourceTree = "<group>"; };
 		23CEF1B827F4714B0020D57E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		D2370D1327FDC11900CC4BDF /* Minecraft.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Minecraft.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 		23AF82C527F6E6A100679CC5 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				D2370D1327FDC11900CC4BDF /* Minecraft.ttf */,
 				23AF82C127F6E67400679CC5 /* Speedway.ttf */,
 				23AF82C327F6E69E00679CC5 /* Hawai.ttf */,
 			);
@@ -192,6 +195,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2370D1427FDC11900CC4BDF /* Minecraft.ttf in Resources */,
 				235C893D27F468180081CA52 /* Preview Assets.xcassets in Resources */,
 				23CEF1BA27F4714B0020D57E /* GameScene.sks in Resources */,
 				23AF82C227F6E67400679CC5 /* Speedway.ttf in Resources */,

@@ -4,6 +4,7 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Minecraft.ttf</string>
 		<string>Hawai.ttf</string>
 		<string>Speedway.ttf</string>
 	</array>

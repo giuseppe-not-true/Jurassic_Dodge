@@ -38,7 +38,7 @@ class GameOverScene: SKScene {
         finalScore.text = "Your score: \(gameLogic.currentScore)"
         finalScore.fontSize = 50.0
         finalScore.color = SKColor.white
-        finalScore.fontName = "Thonburi-Bold"
+        finalScore.fontName = "Minecraft"
         finalScore.position = CGPoint(x: size.width / 2, y: size.height / 2 + 50)
         
         addChild(finalScore)
