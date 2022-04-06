@@ -225,7 +225,7 @@ extension GameScene {
         score.fontName = "Hawai"
         score.fontSize = 50
         score.fontColor = .white
-        score.position = CGPoint(x: 0, y: self.size.height*0.35)
+        score.position = CGPoint(x: self.size.width*0.35, y: self.size.height*0.35)
         score.zPosition = UIzPos
         addChild(score)
     }
