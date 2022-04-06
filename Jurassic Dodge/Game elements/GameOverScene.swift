@@ -16,17 +16,24 @@ class GameOverScene: SKScene {
     var finalScore = SKLabelNode()
     var restartButton = SKSpriteNode(imageNamed: "replay-button")
     var restartLabel = SKLabelNode()
+    var cam = SKCameraNode()
     
     override init(size: CGSize) {
         super.init(size: size)
         
+        
+        
         bg.name = "background"
         bg.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2*1.1)
-        bg.size.width *= 2
-        bg.size.height *= 2
+        bg.size.width *= 1
+        bg.size.height *= 1
         bg.zPosition = 0.0
         
         addChild(bg)
+        
+       
+
+        
         
         finalScore.text = "Your score: \(gameLogic.currentScore)"
         finalScore.fontSize = 50.0
@@ -42,10 +49,10 @@ class GameOverScene: SKScene {
         
         addChild(restartButton)
         
-        restartLabel.text = "Replay"
-        restartLabel.fontSize = 20.0
-        restartLabel.color = SKColor.white
-        restartLabel.fontName = "Thonburi-Bold"
+//        restartLabel.text = "Replay"
+//        restartLabel.fontSize = 20.0
+//        restartLabel.color = SKColor.white
+//        restartLabel.fontName = "Thonburi-Bold"
         restartLabel.position = CGPoint(x: size.width / 2, y: size.height / 2 - 50)
         
         addChild(restartLabel)
@@ -67,9 +74,10 @@ class GameOverScene: SKScene {
     
     func restartGame(){
         let gameScene = GameScene(size: size)
-        gameScene.scaleMode = scaleMode
-        
+        gameScene.scaleMode = .fill
+//        gameScene.camera!.position = CGPoint(x: 0, y: 0)
         let reveal = SKTransition.fade(withDuration: 0.5)
-        view?.presentScene(gameScene, transition: reveal)
+        self.view?.presentScene(gameScene, transition: reveal)
+
     }
 }
