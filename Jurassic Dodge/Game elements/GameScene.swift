@@ -300,9 +300,19 @@ extension GameScene {
         
         switch sideTouched(for: touchLocation) {
         case .right:
-            self.isMovingToTheRight = true
+            if let _ = player.action(forKey: "walk-right") {
+                break
+            }
+            else {
+                self.isMovingToTheRight = true
+            }
         case .left:
-            self.isMovingToTheLeft = true
+            if let _ = player.action(forKey: "walk-left") {
+                break
+            }
+            else {
+                self.isMovingToTheLeft = true
+            }
         }
         
     }

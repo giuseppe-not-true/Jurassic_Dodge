@@ -39,21 +39,24 @@ class PlayerClass: SKSpriteNode {
     }
     
     func walkLeftAnimation() {
+        self.removeAllActions()
         let walkLeftAction = SKAction.animate(with: [walkLeft[0], walkLeft[1], walkLeft[2], walkLeft[1]],  timePerFrame: 1.5)
         let walk = SKAction.repeatForever(walkLeftAction)
-        self.run(walk)
+        self.run(walk, withKey: "walk-left")
     }
     
     func walkRightAnimation() {
+        self.removeAllActions()
         let walkRightAction = SKAction.animate(with: [walkRight[0], walkRight[1], walkRight[2], walkRight[1]], timePerFrame: 1.5)
         let walk = SKAction.repeatForever(walkRightAction)
-        self.run(walk)
+        self.run(walk, withKey: "walk-right")
     }
     
     func idleAnimation() {
+        self.removeAllActions()
         let idleAction = SKAction.animate(with: [idle], timePerFrame: 1.5)
         let idle = SKAction.repeatForever(idleAction)
-        self.run(idle)
+        self.run(idle, withKey: "idle")
     }
     
     func updateWalkAnimations(powerUp: String) {
@@ -63,10 +66,10 @@ class PlayerClass: SKSpriteNode {
         walkLeft = [SKTexture(imageNamed: "\(animationName)-walk-left-1"), SKTexture(imageNamed: "\(animationName)-walk-left-2"), SKTexture(imageNamed: "\(animationName)-walk-left-3"), SKTexture(imageNamed: "\(animationName)-walk-left-2")]
         idle = SKTexture(imageNamed: "\(animationName)-front")
         
-        if (isMovingLeft == true && isMovingRight == false) {
+        if (isMovingLeft == true) {
             self.walkLeftAnimation()
         }
-        if (isMovingRight == true && isMovingLeft == false) {
+        if (isMovingRight == true) {
             self.walkRightAnimation()
         }
 //        if (isMovingRight == false && isMovingRight == false) {
