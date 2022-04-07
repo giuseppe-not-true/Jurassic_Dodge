@@ -8,6 +8,7 @@
 import SpriteKit
 import GameplayKit
 import SwiftUI
+import UIKit
 
 struct PhysicsCategory {
     static let none : UInt32 = 0
@@ -63,6 +64,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let armorSound = SKAction.playSoundFileNamed("armor.mp3", waitForCompletion: true)
     let mangoSound = SKAction.playSoundFileNamed("mango.wav", waitForCompletion: true)
     let healthSound = SKAction.playSoundFileNamed("health.wav", waitForCompletion: true)
+    
+    let feedback = UINotificationFeedbackGenerator()
     
     override func didMove(to view: SKView) {
         self.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
@@ -423,7 +426,9 @@ extension GameScene {
                     }
                 }
                 
+                feedback.notificationOccurred(.error)
                 ground.run(hitSound)
+                
                 node.removeFromParent()
             }
             
@@ -456,7 +461,9 @@ extension GameScene {
                     }
                 }
                 
+                feedback.notificationOccurred(.error)
                 ground.run(hitSound)
+                
                 node.removeFromParent()
             }
             
