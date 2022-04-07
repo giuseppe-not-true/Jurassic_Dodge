@@ -58,7 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var cam = SKCameraNode()
     
     let backgroundMusic = SKAudioNode(fileNamed: "meteor shower.wav")
-    let meteorSound = SKAction.playSoundFileNamed("meteor.wav", waitForCompletion: true)
+//    let meteorSound = SKAction.playSoundFileNamed("meteor.wav", waitForCompletion: true)
     let hitSound = SKAction.playSoundFileNamed("roger-hit.wav", waitForCompletion: true)
     let armorSound = SKAction.playSoundFileNamed("armor.mp3", waitForCompletion: true)
     let mangoSound = SKAction.playSoundFileNamed("mango.wav", waitForCompletion: true)
@@ -745,6 +745,7 @@ extension GameScene {
             break
         case "mango":
             powerUp.powerUpType = .mango
+            powerUp.size = CGSize(width: 25, height: 25)
             break
         default:
             powerUp.powerUpType = .none
