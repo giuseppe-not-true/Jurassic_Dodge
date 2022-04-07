@@ -21,7 +21,7 @@ struct MenuView: View {
             Image("dino-front")
                 .resizable()
                 .frame(width: 100.0, height: 100.0)
-                .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height * 0.8)
+                .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height * 0.85)
         }
         .overlay {
             Color.black

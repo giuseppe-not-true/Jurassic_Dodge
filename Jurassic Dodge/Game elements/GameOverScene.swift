@@ -21,19 +21,13 @@ class GameOverScene: SKScene {
     override init(size: CGSize) {
         super.init(size: size)
         
-        
-        
         bg.name = "background"
-        bg.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2*1.1)
+        bg.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2)
         bg.size.width *= 1
         bg.size.height *= 1
         bg.zPosition = 0.0
         
         addChild(bg)
-        
-       
-
-        
         
         finalScore.text = "Your score: \(gameLogic.currentScore)"
         finalScore.fontSize = 50.0
@@ -44,8 +38,8 @@ class GameOverScene: SKScene {
         addChild(finalScore)
         
         restartButton.name = "restartButton"
-        restartButton.size = CGSize(width: 150.0, height: 100.0)
-        restartButton.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        restartButton.size = CGSize(width: 200.0, height: 80.0)
+        restartButton.position = CGPoint(x: size.width / 2, y: size.height / 2 - 30)
         
         addChild(restartButton)
         
@@ -53,9 +47,9 @@ class GameOverScene: SKScene {
 //        restartLabel.fontSize = 20.0
 //        restartLabel.color = SKColor.white
 //        restartLabel.fontName = "Thonburi-Bold"
-        restartLabel.position = CGPoint(x: size.width / 2, y: size.height / 2 - 50)
-        
-        addChild(restartLabel)
+//        restartLabel.position = CGPoint(x: size.width / 2, y: size.height / 2 - 50)
+//
+//        addChild(restartLabel)
     }
     
     required init?(coder aDecoder: NSCoder) {
