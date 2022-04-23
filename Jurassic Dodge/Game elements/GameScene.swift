@@ -427,7 +427,12 @@ extension GameScene {
             if let player = secondBody.node, player.name == "player" {
                 if self.player.hasArmor {
                     self.player.hasArmor = false
-                    self.player.animationName = "dino"
+                    if self.player.hasMango {
+                        self.player.animationName = "mango"
+                    }
+                    else {
+                        self.player.animationName = "dino"
+                    }
                     self.player.updateWalkAnimations(powerUp: self.player.animationName)
                     if (self.player.isMovingLeft) {
                         self.moveLeft()
@@ -468,7 +473,12 @@ extension GameScene {
             if let player = firstBody.node, player.name == "player" {
                 if self.player.hasArmor {
                     self.player.hasArmor = false
-                    self.player.animationName = "dino"
+                    if self.player.hasMango {
+                        self.player.animationName = "mango"
+                    }
+                    else {
+                        self.player.animationName = "dino"
+                    }
                     self.player.updateWalkAnimations(powerUp: self.player.animationName)
                     if (self.player.isMovingLeft) {
                         self.moveLeft()
@@ -589,7 +599,11 @@ extension GameScene {
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                                     self.player.speed /= 1.5
                                     self.player.hasMango = false
-                                    self.player.animationName = "dino"
+                                    if self.player.hasArmor {
+                                        self.player.animationName = "armor"
+                                    } else {
+                                        self.player.animationName = "dino"
+                                    }
                                     self.player.updateWalkAnimations(powerUp: self.player.animationName)
                                     if (self.player.isMovingLeft) {
                                         self.moveLeft()
@@ -712,7 +726,11 @@ extension GameScene {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                                 self.player.speed /= 1.5
                                 self.player.hasMango = false
-                                self.player.animationName = "dino"
+                                if self.player.hasArmor {
+                                    self.player.animationName = "armor"
+                                } else {
+                                    self.player.animationName = "dino"
+                                }
                                 self.player.updateWalkAnimations(powerUp: self.player.animationName)
                                 if (self.player.isMovingLeft) {
                                     self.moveLeft()
