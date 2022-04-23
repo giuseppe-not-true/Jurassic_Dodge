@@ -69,14 +69,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         self.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-        
         self.setUpGame()
         self.setUpPhysicsWorld()
         cam.position = CGPoint(x: bg.position.x , y: bg.position.y )
         addChild(cam)
         self.camera = cam
-
-
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -247,27 +244,27 @@ extension GameScene {
 // MARK: - Player Movement
 extension GameScene {
     private func moveLeft() {
-        
+        self.player.isMovingLeft = true
+        self.player.isMovingRight = false
         let action = SKAction.move(to: CGPoint(x: -self.frame.width*0.45, y: self.player.position.y), duration: getDuration(pointA: self.player.position, pointB: CGPoint(x: -self.frame.width*0.45, y: self.player.position.y), speed: self.player.speed))
         self.player.walkLeftAnimation()
         self.player.run(action, withKey: "move-left")
-
     }
     
     private func moveRight() {
-        
+        self.player.isMovingLeft = false
+        self.player.isMovingRight = true
         let action = SKAction.move(to: CGPoint(x: self.frame.width*0.45, y: self.player.position.y), duration: getDuration(pointA: self.player.position, pointB: CGPoint(x: self.frame.width*0.45, y: self.player.position.y), speed: self.player.speed))
         self.player.walkRightAnimation()
         self.player.run(action, withKey: "move-right")
-        
     }
     
     private func stop() {
-        
+        self.player.isMovingLeft = false
+        self.player.isMovingRight = false
         self.player.removeAction(forKey: "move-right")
         self.player.removeAction(forKey: "move-left")
         self.player.idleAnimation()
-        
     }
 }
 
@@ -300,18 +297,22 @@ extension GameScene {
         
         switch sideTouched(for: touchLocation) {
         case .right:
-            if let _ = player.action(forKey: "walk-right") {
+            if let _ = self.player.action(forKey: "walk-right") {
                 break
             }
             else {
                 self.isMovingToTheRight = true
+                self.player.isMovingLeft = false
+                self.player.isMovingRight = true
             }
         case .left:
-            if let _ = player.action(forKey: "walk-left") {
+            if let _ = self.player.action(forKey: "walk-left") {
                 break
             }
             else {
                 self.isMovingToTheLeft = true
+                self.player.isMovingLeft = true
+                self.player.isMovingRight = false
             }
         }
         
@@ -320,9 +321,7 @@ extension GameScene {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.isMovingToTheRight = false
         self.isMovingToTheLeft = false
-        
     }
-    
 }
 
 // MARK: - Meteors
@@ -430,6 +429,12 @@ extension GameScene {
                     self.player.hasArmor = false
                     self.player.animationName = "dino"
                     self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                    if (self.player.isMovingLeft) {
+                        self.moveLeft()
+                    }
+                    else if(self.player.isMovingRight) {
+                        self.moveRight()
+                    }
                 } else {
                     if self.player.lives > 0 {
                         updateLives(update: -1)
@@ -465,6 +470,12 @@ extension GameScene {
                     self.player.hasArmor = false
                     self.player.animationName = "dino"
                     self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                    if (self.player.isMovingLeft) {
+                        self.moveLeft()
+                    }
+                    else if(self.player.isMovingRight) {
+                        self.moveRight()
+                    }
                 } else {
                     if self.player.lives > 0 {
                         updateLives(update: -1)
@@ -489,6 +500,7 @@ extension GameScene {
                         } else {
                             self.gameLogic.score(points: 2)
                             self.counter += 2
+                            self.score.text = "Score: \(self.gameLogic.currentScore)"
                         }
                         break
                     case .armor:
@@ -504,31 +516,21 @@ extension GameScene {
                                 self.player.animationName = "red-armor"
                                 self.player.hasArmor = true
                                 self.player.updateWalkAnimations(powerUp: self.player.animationName)
-                                if isMovingToTheLeft {
-                                    self.player.isMovingLeft = true
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                        self.player.isMovingLeft = false
-                                    }
-                                } else if isMovingToTheRight {
-                                    self.player.isMovingRight = true
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                        self.player.isMovingRight = false
-                                    }
+                                if (self.player.isMovingLeft) {
+                                    self.moveLeft()
+                                }
+                                else if(self.player.isMovingRight) {
+                                    self.moveRight()
                                 }
                             } else {
                                 self.player.animationName = "armor"
                                 self.player.hasArmor = true
                                 self.player.updateWalkAnimations(powerUp: self.player.animationName)
-                                if isMovingToTheLeft {
-                                    self.player.isMovingLeft = true
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                        self.player.isMovingLeft = false
-                                    }
-                                } else if isMovingToTheRight {
-                                    self.player.isMovingRight = true
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                        self.player.isMovingRight = false
-                                    }
+                                if (self.player.isMovingLeft) {
+                                    self.moveLeft()
+                                }
+                                else if(self.player.isMovingRight) {
+                                    self.moveRight()
                                 }
                             }
                             break
@@ -549,16 +551,11 @@ extension GameScene {
                                 self.player.animationName = "red-armor"
                                 self.player.hasMango = true
                                 self.player.updateWalkAnimations(powerUp: self.player.animationName)
-                                if isMovingToTheLeft {
-                                    self.player.isMovingLeft = true
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                        self.player.isMovingLeft = false
-                                    }
-                                } else if isMovingToTheRight {
-                                    self.player.isMovingRight = true
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                        self.player.isMovingRight = false
-                                    }
+                                if (self.player.isMovingLeft) {
+                                    self.moveLeft()
+                                }
+                                else if(self.player.isMovingRight) {
+                                    self.moveRight()
                                 }
                                 self.player.speed *= 1.5
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
@@ -570,22 +567,23 @@ extension GameScene {
                                         self.player.animationName = "dino"
                                     }
                                     self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                                    if (self.player.isMovingLeft) {
+                                        self.moveLeft()
+                                    }
+                                    else if(self.player.isMovingRight) {
+                                        self.moveRight()
+                                    }
                                 }
 
                             } else {
                                 self.player.animationName = "mango"
                                 self.player.hasMango = true
                                 self.player.updateWalkAnimations(powerUp: self.player.animationName)
-                                if isMovingToTheLeft {
-                                    self.player.isMovingLeft = true
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                        self.player.isMovingLeft = false
-                                    }
-                                } else if isMovingToTheRight {
-                                    self.player.isMovingRight = true
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                        self.player.isMovingRight = false
-                                    }
+                                if (self.player.isMovingLeft) {
+                                    self.moveLeft()
+                                }
+                                else if(self.player.isMovingRight) {
+                                    self.moveRight()
                                 }
                                 self.player.speed *= 1.5
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
@@ -593,6 +591,12 @@ extension GameScene {
                                     self.player.hasMango = false
                                     self.player.animationName = "dino"
                                     self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                                    if (self.player.isMovingLeft) {
+                                        self.moveLeft()
+                                    }
+                                    else if(self.player.isMovingRight) {
+                                        self.moveRight()
+                                    }
                                 }
                             }
                             break
@@ -619,6 +623,7 @@ extension GameScene {
                     } else {
                         self.gameLogic.score(points: 2)
                         self.counter += 2
+                        self.score.text = "Score: \(self.gameLogic.currentScore)"
                     }
                     break
                 case .armor:
@@ -634,31 +639,21 @@ extension GameScene {
                             self.player.animationName = "red-armor"
                             self.player.hasArmor = true
                             self.player.updateWalkAnimations(powerUp: self.player.animationName)
-                            if isMovingToTheLeft {
-                                self.player.isMovingLeft = true
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                    self.player.isMovingLeft = false
-                                }
-                            } else if isMovingToTheRight {
-                                self.player.isMovingRight = true
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                    self.player.isMovingRight = false
-                                }
+                            if (self.player.isMovingLeft) {
+                                self.moveLeft()
+                            }
+                            else if(self.player.isMovingRight) {
+                                self.moveRight()
                             }
                         } else {
                             self.player.animationName = "armor"
                             self.player.hasArmor = true
                             self.player.updateWalkAnimations(powerUp: self.player.animationName)
-                            if isMovingToTheLeft {
-                                self.player.isMovingLeft = true
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                    self.player.isMovingLeft = false
-                                }
-                            } else if isMovingToTheRight {
-                                self.player.isMovingRight = true
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                    self.player.isMovingRight = false
-                                }
+                            if (self.player.isMovingLeft) {
+                                self.moveLeft()
+                            }
+                            else if(self.player.isMovingRight) {
+                                self.moveRight()
                             }
                         }
                         break
@@ -679,16 +674,11 @@ extension GameScene {
                             self.player.animationName = "red-armor"
                             self.player.hasMango = true
                             self.player.updateWalkAnimations(powerUp: self.player.animationName)
-                            if isMovingToTheLeft {
-                                self.player.isMovingLeft = true
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                    self.player.isMovingLeft = false
-                                }
-                            } else if isMovingToTheRight {
-                                self.player.isMovingRight = true
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                    self.player.isMovingRight = false
-                                }
+                            if (self.player.isMovingLeft) {
+                                self.moveLeft()
+                            }
+                            else if(self.player.isMovingRight) {
+                                self.moveRight()
                             }
                             self.player.speed *= 1.5
                             DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
@@ -700,22 +690,23 @@ extension GameScene {
                                     self.player.animationName = "dino"
                                 }
                                 self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                                if (self.player.isMovingLeft) {
+                                    self.moveLeft()
+                                }
+                                else if(self.player.isMovingRight) {
+                                    self.moveRight()
+                                }
                             }
 
                         } else {
                             self.player.animationName = "mango"
                             self.player.hasMango = true
                             self.player.updateWalkAnimations(powerUp: self.player.animationName)
-                            if isMovingToTheLeft {
-                                self.player.isMovingLeft = true
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                    self.player.isMovingLeft = false
-                                }
-                            } else if isMovingToTheRight {
-                                self.player.isMovingRight = true
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                    self.player.isMovingRight = false
-                                }
+                            if (self.player.isMovingLeft) {
+                                self.moveLeft()
+                            }
+                            else if(self.player.isMovingRight) {
+                                self.moveRight()
                             }
                             self.player.speed *= 1.5
                             DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
@@ -723,6 +714,12 @@ extension GameScene {
                                 self.player.hasMango = false
                                 self.player.animationName = "dino"
                                 self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                                if (self.player.isMovingLeft) {
+                                    self.moveLeft()
+                                }
+                                else if(self.player.isMovingRight) {
+                                    self.moveRight()
+                                }
                             }
                         }
                         break
