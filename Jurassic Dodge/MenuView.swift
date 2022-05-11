@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct MenuView: View {
-    @Binding var currentGameState: GameState
+    @ObservedObject var gameLogic: GameLogic = GameLogic.shared
     
     var body: some View {
         ZStack{
@@ -52,18 +52,7 @@ struct MenuView: View {
                 }
             }
         }.onTapGesture {
-            currentGameState = .playing
+            gameLogic.currentGameState = .playing
         }
-    }
-}
-
-//extension Color {
-//    static let greenMenu = UIColor(named: "Green Menu")
-//    static let orangeMenu = UIColor(named: "Orange Menu")
-//}
-
-struct MenuView_Previews: PreviewProvider {
-    static var previews: some View {
-        MenuView(currentGameState: .constant(.mainScreen)).previewInterfaceOrientation(.landscapeRight)
     }
 }

@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
 
 class GameLogic: ObservableObject {
     // Single instance of the class
     static let shared: GameLogic = GameLogic()
+    @Published var currentGameState: GameState = .mainScreen
     
     // Function responsible to set up the game before it starts.
     func setUpGame() {

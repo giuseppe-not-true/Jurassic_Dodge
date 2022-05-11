@@ -15,6 +15,7 @@ class GameOverScene: SKScene {
     var bg = SKSpriteNode(imageNamed: "background")
     var finalScore = SKLabelNode()
     var restartButton = SKSpriteNode(imageNamed: "replay-button")
+    var homeButton = SKSpriteNode(imageNamed: "replay-button")
     var restartLabel = SKLabelNode()
     var cam = SKCameraNode()
     
@@ -39,17 +40,15 @@ class GameOverScene: SKScene {
         
         restartButton.name = "restartButton"
         restartButton.size = CGSize(width: 200.0, height: 80.0)
-        restartButton.position = CGPoint(x: size.width / 2, y: size.height / 2 - 30)
+        restartButton.position = CGPoint(x: size.width / 2 + 100, y: size.height / 2 - 30)
         
         addChild(restartButton)
         
-//        restartLabel.text = "Replay"
-//        restartLabel.fontSize = 20.0
-//        restartLabel.color = SKColor.white
-//        restartLabel.fontName = "Thonburi-Bold"
-//        restartLabel.position = CGPoint(x: size.width / 2, y: size.height / 2 - 50)
-//
-//        addChild(restartLabel)
+        homeButton.name = "homeButton"
+        homeButton.size = CGSize(width: 200.0, height: 80.0)
+        homeButton.position = CGPoint(x: size.width / 2 - 100, y: size.height / 2 - 30)
+        
+        addChild(homeButton)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -62,16 +61,26 @@ class GameOverScene: SKScene {
             let touchedNode = atPoint(location)
             if touchedNode.name == "restartButton" {
                 restartGame()
+            } else if touchedNode.name == "homeButton" {
+                homeScreen()
             }
         }
     }
     
     func restartGame(){
+        self.removeAllChildren()
+        self.removeAllActions()
+
         let gameScene = GameScene(size: size)
         gameScene.scaleMode = .fill
-//        gameScene.camera!.position = CGPoint(x: 0, y: 0)
         let reveal = SKTransition.fade(withDuration: 0.5)
         self.view?.presentScene(gameScene, transition: reveal)
-
+    }
+    
+    func homeScreen() {
+        self.removeAllChildren()
+        self.removeAllActions()
+        
+        gameLogic.currentGameState = .mainScreen
     }
 }

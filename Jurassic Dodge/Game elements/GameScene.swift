@@ -829,12 +829,16 @@ extension GameScene {
     private func gameOverDisplay() {
 //        backgroundMusic.run(SKAction.stop())
         
+        self.removeAllChildren()
+        
+        self.removeAllActions()
+        
         for i in 0...2 {
             healthPoints[i].removeFromParent()
         }
-        
+
         backgroundMusic.removeFromParent()
-        
+
         cam.removeFromParent()
         
         let gameOverScene = GameOverScene(size: size)

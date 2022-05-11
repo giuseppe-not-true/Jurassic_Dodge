@@ -9,16 +9,14 @@ import SwiftUI
 import SpriteKit
 
 struct ContentView: View {
-    let scene = GameScene(fileNamed: "GameScene")!
-    @State var currentGameState: GameState = .mainScreen
+    @ObservedObject var gameLogic: GameLogic = GameLogic.shared
     
     var body: some View {
-        
-        switch currentGameState {
+        switch gameLogic.currentGameState {
         case .mainScreen:
-            MenuView(currentGameState: $currentGameState)
+            MenuView()
         case .playing:
-            SpriteView(scene: scene)
+            SpriteView(scene: GameScene())
                 .ignoresSafeArea()
         }
     }
