@@ -15,6 +15,8 @@ struct ContentView: View {
         switch gameLogic.currentGameState {
         case .mainScreen:
             MenuView()
+        case .instructions:
+            InstructionView()
         case .playing:
             SpriteView(scene: GameScene())
                 .ignoresSafeArea()

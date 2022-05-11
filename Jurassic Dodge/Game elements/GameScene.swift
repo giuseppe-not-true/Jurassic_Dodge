@@ -114,6 +114,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if self.player.lives == 0 {
+            let highScore = UserDefaults.standard.integer(forKey: "HighScore")
+            let currentScore = gameLogic.currentScore
+            
+            if currentScore > highScore {
+                UserDefaults.standard.set(currentScore, forKey: "HighScore")
+            }
+            
             self.gameLogic.finishTheGame()
         }
         

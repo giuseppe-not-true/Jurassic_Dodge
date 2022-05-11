@@ -10,7 +10,8 @@ import SwiftUI
 
 struct MenuView: View {
     @ObservedObject var gameLogic: GameLogic = GameLogic.shared
-    
+    @State var highScore = 0
+        
     var body: some View {
         ZStack{
             Image("background")
@@ -45,14 +46,16 @@ struct MenuView: View {
                     }
                     .padding()
                     
-                    Text(LocalizedStringKey("Tap the sides of the screen to move left and right."))
-                        .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height*0.1)
+                    Text("Highscore: \(String(UserDefaults.standard.integer(forKey: "HighScore")))")
+                        .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height*0.15)
                         .foregroundColor(.white)
+                        .font(Font.custom("Minecraft", size: 25.0))
 
                 }
             }
-        }.onTapGesture {
-            gameLogic.currentGameState = .playing
+        }
+        .onTapGesture {
+            gameLogic.currentGameState = .instructions
         }
     }
 }
