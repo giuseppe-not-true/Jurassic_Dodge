@@ -217,6 +217,7 @@ extension GameScene {
     private func setLives() {
         let initPos = CGPoint(x: -self.size.width*0.40, y: self.size.height*0.40)
         
+        
         for i in 0...self.player.lives-1 {
             healthPoints[i].name = "heart"
             healthPoints[i].size.width = 80.0
@@ -826,7 +827,16 @@ extension GameScene {
 
 extension GameScene {
     private func gameOverDisplay() {
-        backgroundMusic.run(SKAction.stop())
+//        backgroundMusic.run(SKAction.stop())
+        
+        for i in 0...2 {
+            healthPoints[i].removeFromParent()
+        }
+        
+        backgroundMusic.removeFromParent()
+        
+        cam.removeFromParent()
+        
         let gameOverScene = GameOverScene(size: size)
         gameOverScene.scaleMode = scaleMode
         
