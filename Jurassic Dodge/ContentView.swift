@@ -7,26 +7,40 @@
 
 import SwiftUI
 import SpriteKit
+import AVFoundation
 
 struct ContentView: View {
     @ObservedObject var gameLogic: GameLogic = GameLogic.shared
+    @State var music = AudioPlayer()
     
     var body: some View {
         switch gameLogic.currentGameState {
         case .mainScreen:
             MenuView()
+                .onAppear {
+                    music.stopBackgroundMusic()
+                }
         case .instructions:
             InstructionView()
+                .onAppear {
+                    music.stopBackgroundMusic()
+                }
         case .playing:
-            SpriteView(scene: GameScene())
-                .ignoresSafeArea()
+            GameSceneView()
+                .onAppear {
+                    music.playBackgroundMusic()
+                }
+                .onChange(of: gameLogic.isGameOver) { newValue in
+                    if newValue {
+                        music.stopBackgroundMusic()
+                    }
+                }
         }
     }
 }
 
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView().previewInterfaceOrientation(.landscapeRight)
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView().previewInterfaceOrientation(.landscapeRight)
+//    }
+//}

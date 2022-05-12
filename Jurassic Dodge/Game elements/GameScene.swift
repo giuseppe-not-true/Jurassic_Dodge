@@ -19,7 +19,7 @@ struct PhysicsCategory {
     static let powerUp : UInt32 = 0b1000
 }
 
-class GameScene: SKScene, SKPhysicsContactDelegate {
+class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     
     /**
      * # The Game Logic
@@ -58,7 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var cam = SKCameraNode()
     
-    let backgroundMusic = SKAudioNode(fileNamed: "meteor shower.wav")
+//    let backgroundMusic = SKAudioNode(fileNamed: "meteor shower.wav")
 //    let meteorSound = SKAction.playSoundFileNamed("meteor.wav", waitForCompletion: true)
     let hitSound = SKAction.playSoundFileNamed("roger-hit.wav", waitForCompletion: true)
     let armorSound = SKAction.playSoundFileNamed("armor.mp3", waitForCompletion: true)
@@ -68,6 +68,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let feedback = UINotificationFeedbackGenerator()
     
     override func didMove(to view: SKView) {
+        print("in did move")
         self.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         self.setUpGame()
         self.setUpPhysicsWorld()
@@ -175,7 +176,7 @@ extension GameScene {
         ground.physicsBody?.contactTestBitMask = PhysicsCategory.meteor
         
         addChild(ground)
-        self.addChild(backgroundMusic)
+//        self.addChild(backgroundMusic)
     }
     
     private func createPlayer(initPos: CGPoint) {
@@ -835,18 +836,18 @@ extension GameScene {
 extension GameScene {
     private func gameOverDisplay() {
 //        backgroundMusic.run(SKAction.stop())
+//        backgroundMusic.removeFromParent()
         
-        self.removeAllChildren()
-        
-        self.removeAllActions()
+//        self.removeAllChildren()
+//        self.removeAllActions()
         
         for i in 0...2 {
             healthPoints[i].removeFromParent()
         }
 
-        backgroundMusic.removeFromParent()
-
         cam.removeFromParent()
+        
+//        self.removeFromParent()
         
         let gameOverScene = GameOverScene(size: size)
         gameOverScene.scaleMode = scaleMode

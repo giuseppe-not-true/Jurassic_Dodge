@@ -68,9 +68,6 @@ class GameOverScene: SKScene {
     }
     
     func restartGame(){
-        self.removeAllChildren()
-        self.removeAllActions()
-
         let gameScene = GameScene(size: size)
         gameScene.scaleMode = .fill
         let reveal = SKTransition.fade(withDuration: 0.5)
@@ -78,8 +75,8 @@ class GameOverScene: SKScene {
     }
     
     func homeScreen() {
-        self.removeAllChildren()
-        self.removeAllActions()
+//        self.removeAllChildren()
+//        self.removeAllActions()
         
         gameLogic.currentGameState = .mainScreen
     }

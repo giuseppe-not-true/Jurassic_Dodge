@@ -13,6 +13,8 @@
 		235C893D27F468180081CA52 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 235C893C27F468180081CA52 /* Preview Assets.xcassets */; };
 		235C895E27F46A9F0081CA52 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235C895D27F46A9F0081CA52 /* GameScene.swift */; };
 		237474C8282BF6F500679F9D /* InstructionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237474C7282BF6F500679F9D /* InstructionView.swift */; };
+		2387D0A1282D16A9003828E2 /* GameSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2387D0A0282D16A9003828E2 /* GameSceneView.swift */; };
+		2387D0A3282D1FAA003828E2 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2387D0A2282D1FA9003828E2 /* AudioPlayer.swift */; };
 		23AF82C227F6E67400679CC5 /* Speedway.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23AF82C127F6E67400679CC5 /* Speedway.ttf */; };
 		23AF82C427F6E69E00679CC5 /* Hawai.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23AF82C327F6E69E00679CC5 /* Hawai.ttf */; };
 		23B6229127F6600D00649DAA /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B6229027F6600D00649DAA /* GameOverScene.swift */; };
@@ -41,6 +43,8 @@
 		235C893C27F468180081CA52 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		235C895D27F46A9F0081CA52 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		237474C7282BF6F500679F9D /* InstructionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionView.swift; sourceTree = "<group>"; };
+		2387D0A0282D16A9003828E2 /* GameSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneView.swift; sourceTree = "<group>"; };
+		2387D0A2282D1FA9003828E2 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		23AF82C127F6E67400679CC5 /* Speedway.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Speedway.ttf; sourceTree = "<group>"; };
 		23AF82C327F6E69E00679CC5 /* Hawai.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Hawai.ttf; sourceTree = "<group>"; };
 		23AF82C627F6E6DB00679CC5 /* Jurassic-Dodge-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Jurassic-Dodge-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -95,6 +99,8 @@
 				23AF82C627F6E6DB00679CC5 /* Jurassic-Dodge-Info.plist */,
 				235C893527F468160081CA52 /* Jurassic_DodgeApp.swift */,
 				235C893727F468160081CA52 /* ContentView.swift */,
+				2387D0A2282D1FA9003828E2 /* AudioPlayer.swift */,
+				2387D0A0282D16A9003828E2 /* GameSceneView.swift */,
 				23B6229427F6695C00649DAA /* MenuView.swift */,
 				237474C7282BF6F500679F9D /* InstructionView.swift */,
 				23AF82C527F6E6A100679CC5 /* Fonts */,
@@ -251,6 +257,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				235C895E27F46A9F0081CA52 /* GameScene.swift in Sources */,
+				2387D0A1282D16A9003828E2 /* GameSceneView.swift in Sources */,
 				23B8413227F4FEFA009FA6C2 /* PowerUpClass.swift in Sources */,
 				235C893827F468160081CA52 /* ContentView.swift in Sources */,
 				23CEF1B927F4714B0020D57E /* GameLogic.swift in Sources */,
@@ -260,6 +267,7 @@
 				23B8413327F4FEFA009FA6C2 /* MeteorClass.swift in Sources */,
 				237474C8282BF6F500679F9D /* InstructionView.swift in Sources */,
 				23B6229127F6600D00649DAA /* GameOverScene.swift in Sources */,
+				2387D0A3282D1FAA003828E2 /* AudioPlayer.swift in Sources */,
 				23B8413527F4FF10009FA6C2 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -389,7 +397,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Jurassic Dodge/Preview Content\"";
-				DEVELOPMENT_TEAM = J92848C73R;
+				DEVELOPMENT_TEAM = 38F3PD24AD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Jurassic-Dodge-Info.plist";
@@ -421,7 +429,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Jurassic Dodge/Preview Content\"";
-				DEVELOPMENT_TEAM = J92848C73R;
+				DEVELOPMENT_TEAM = 38F3PD24AD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Jurassic-Dodge-Info.plist";
