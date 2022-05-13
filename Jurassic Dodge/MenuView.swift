@@ -11,6 +11,7 @@ import SwiftUI
 struct MenuView: View {
     @ObservedObject var gameLogic: GameLogic = GameLogic.shared
     @State var highScore = 0
+    @Binding var isMuted: Bool
         
     var body: some View {
         ZStack{
@@ -50,6 +51,11 @@ struct MenuView: View {
                         .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height*0.15)
                         .foregroundColor(.white)
                         .font(Font.custom("Minecraft", size: 25.0))
+                    
+                    Button("Mute") {
+                        isMuted.toggle()
+                    }
+
 
                 }
             }

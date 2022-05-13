@@ -12,11 +12,12 @@ import AVFoundation
 struct ContentView: View {
     @ObservedObject var gameLogic: GameLogic = GameLogic.shared
     @State var music = AudioPlayer()
+    @State var isMuted: Bool = false
     
     var body: some View {
         switch gameLogic.currentGameState {
         case .mainScreen:
-            MenuView()
+            MenuView(isMuted: $isMuted)
                 .onAppear {
                     music.stopBackgroundMusic()
                 }
@@ -26,15 +27,19 @@ struct ContentView: View {
                     music.stopBackgroundMusic()
                 }
         case .playing:
-            GameSceneView()
+            GameSceneView(isMuted: $isMuted)
                 .onAppear {
-                    music.playBackgroundMusic()
+                    if !self.isMuted {
+                        music.playBackgroundMusic()
+                    }
                 }
                 .onChange(of: gameLogic.isGameOver) { newValue in
-                    if newValue {
-                        music.stopBackgroundMusic()
-                    } else {
-                        music.playBackgroundMusic()
+                    if !self.isMuted {
+                        if newValue {
+                            music.stopBackgroundMusic()
+                        } else {
+                            music.playBackgroundMusic()
+                        }
                     }
                 }
         }

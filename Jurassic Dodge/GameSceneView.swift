@@ -9,6 +9,7 @@ import SwiftUI
 import SpriteKit
 
 struct SpriteKitContainer : UIViewRepresentable {
+    var isMuted: Bool?
     
     class Coordinator: NSObject {
         var scene: GameScene? = GameScene()
@@ -32,6 +33,7 @@ struct SpriteKitContainer : UIViewRepresentable {
         }
         aScene.scaleMode = .resizeFill
         context.coordinator.scene = aScene
+        context.coordinator.scene?.isMuted = isMuted!
         return view
     }
     
@@ -45,10 +47,11 @@ struct SpriteKitContainer : UIViewRepresentable {
 struct GameSceneView: View {
     @Environment(\.scenePhase) var scenePhase
     var gameScene: GameScene = GameScene()
+    @Binding var isMuted: Bool
     
     var body: some View {
         //        SpriteView(scene: gameScene)
-        SpriteKitContainer()
+        SpriteKitContainer(isMuted: isMuted)
             .ignoresSafeArea()
             .onChange(of: scenePhase) { newPhase in
                 if newPhase == .active {

@@ -58,6 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     
     var cam = SKCameraNode()
     
+    var isMuted: Bool = false
 //    let backgroundMusic = SKAudioNode(fileNamed: "meteor shower.wav")
 //    let meteorSound = SKAction.playSoundFileNamed("meteor.wav", waitForCompletion: true)
     let hitSound = SKAction.playSoundFileNamed("roger-hit.wav", waitForCompletion: true)
@@ -457,7 +458,12 @@ extension GameScene {
                 }
                 
                 feedback.notificationOccurred(.error)
-                ground.run(hitSound)
+                
+                
+                if !self.isMuted {
+                    print(self.isMuted)
+                    ground.run(hitSound)
+                }
                 
                 node.removeFromParent()
             }
@@ -503,7 +509,10 @@ extension GameScene {
                 }
                 
                 feedback.notificationOccurred(.error)
-                ground.run(hitSound)
+                
+                if !self.isMuted {
+                    ground.run(hitSound)
+                }
                 
                 node.removeFromParent()
             }
@@ -514,7 +523,9 @@ extension GameScene {
             if let powerUp = secondBody.node as? PowerUpClass, powerUp.name == "power-up" {
                     switch(powerUp.powerUpType) {
                     case .heart:
-                        ground.run(healthSound)
+                        if !self.isMuted {
+                            ground.run(healthSound)
+                        }
                         if self.player.lives < 3 {
                             updateLives(update: 1)
                         } else {
@@ -524,7 +535,9 @@ extension GameScene {
                         }
                         break
                     case .armor:
-                        ground.run(armorSound)
+                        if !self.isMuted {
+                            ground.run(armorSound)
+                        }
                         switch(self.player.hasArmor) {
                         case true:
                             self.gameLogic.score(points: 2)
@@ -559,7 +572,9 @@ extension GameScene {
                         }
                         break
                     case .mango:
-                        ground.run(mangoSound)
+                        if !self.isMuted {
+                            ground.run(mangoSound)
+                        }
                         switch(self.player.hasMango) {
                         case true:
                             self.gameLogic.score(points: 2)
@@ -641,7 +656,9 @@ extension GameScene {
             if let powerUp = firstBody.node as? PowerUpClass, powerUp.name == "power-up" {
                 switch(powerUp.powerUpType) {
                 case .heart:
-                    ground.run(healthSound)
+                    if !self.isMuted {
+                        ground.run(healthSound)
+                    }
                     if self.player.lives < 3 {
                         updateLives(update: 1)
                     } else {
@@ -651,7 +668,9 @@ extension GameScene {
                     }
                     break
                 case .armor:
-                    ground.run(armorSound)
+                    if !self.isMuted {
+                        ground.run(armorSound)
+                    }
                     switch(self.player.hasArmor) {
                     case true:
                         self.gameLogic.score(points: 2)
@@ -686,7 +705,9 @@ extension GameScene {
                     }
                     break
                 case .mango:
-                    ground.run(mangoSound)
+                    if !self.isMuted {
+                        ground.run(mangoSound)
+                    }
                     switch(self.player.hasMango) {
                     case true:
                         self.gameLogic.score(points: 2)
