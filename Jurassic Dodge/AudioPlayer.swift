@@ -29,6 +29,10 @@ class AudioPlayer {
     
     func stopBackgroundMusic() {
         backgroundMusicPlayer.pause()
+    }
+    
+    func resetBackgroundMusic() {
+        backgroundMusicPlayer.pause()
         backgroundMusicPlayer.currentTime = 0
     }
 }

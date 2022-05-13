@@ -59,7 +59,7 @@ struct GameSceneView: View {
             .ignoresSafeArea()
             .onChange(of: scenePhase) { newPhase in
                 if newPhase == .active {
-                    if !gameScene.gameLogic.isGameOver {
+                    if !gameScene.gameLogic.isGameOver && !self.isMuted {
                         music.playBackgroundMusic()
                     }
                     gameScene.view?.isPaused = false

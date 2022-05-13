@@ -38,6 +38,7 @@ struct ContentView: View {
                     if !self.isMuted {
                         if newValue {
                             music.stopBackgroundMusic()
+                            music.resetBackgroundMusic()
                         } else {
                             music.playBackgroundMusic()
                         }
