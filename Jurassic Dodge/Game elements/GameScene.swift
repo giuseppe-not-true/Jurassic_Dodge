@@ -29,7 +29,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
      **/
     
     @ObservedObject var gameLogic: GameLogic = GameLogic.shared
-    
+        
     var waitAction = SKAction()
     var meteorCycleAction = SKAction()
     var bg: SKSpriteNode!
@@ -69,6 +69,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     
     override func didMove(to view: SKView) {
         print("in did move")
+                
         self.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         self.setUpGame()
         self.setUpPhysicsWorld()

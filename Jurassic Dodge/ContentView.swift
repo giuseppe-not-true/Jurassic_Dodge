@@ -33,6 +33,8 @@ struct ContentView: View {
                 .onChange(of: gameLogic.isGameOver) { newValue in
                     if newValue {
                         music.stopBackgroundMusic()
+                    } else {
+                        music.playBackgroundMusic()
                     }
                 }
         }
