@@ -13,11 +13,12 @@ struct ContentView: View {
     @ObservedObject var gameLogic: GameLogic = GameLogic.shared
     @State var music = AudioPlayer()
     @State var isMuted: Bool = false
+    @State var isFeedbackMuted: Bool = false
     
     var body: some View {
         switch gameLogic.currentGameState {
         case .mainScreen:
-            MenuView(isMuted: $isMuted)
+            MenuView(isMuted: $isMuted, isFeedbackMuted: $isFeedbackMuted)
                 .onAppear {
                     music.stopBackgroundMusic()
                 }
@@ -27,7 +28,7 @@ struct ContentView: View {
                     music.stopBackgroundMusic()
                 }
         case .playing:
-            GameSceneView(isMuted: $isMuted)
+            GameSceneView(music: $music, isMuted: $isMuted, isFeedbackMuted: $isFeedbackMuted)
                 .onAppear {
                     if !self.isMuted {
                         music.playBackgroundMusic()

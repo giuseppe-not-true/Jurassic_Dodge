@@ -75,8 +75,8 @@ class GameOverScene: SKScene {
     }
     
     func homeScreen() {
-//        self.removeAllChildren()
-//        self.removeAllActions()
+        self.removeAllChildren()
+        self.removeAllActions()
         
         gameLogic.currentGameState = .mainScreen
     }

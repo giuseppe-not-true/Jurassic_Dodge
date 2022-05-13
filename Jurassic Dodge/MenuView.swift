@@ -12,6 +12,7 @@ struct MenuView: View {
     @ObservedObject var gameLogic: GameLogic = GameLogic.shared
     @State var highScore = 0
     @Binding var isMuted: Bool
+    @Binding var isFeedbackMuted: Bool
         
     var body: some View {
         ZStack{
@@ -52,8 +53,14 @@ struct MenuView: View {
                         .foregroundColor(.white)
                         .font(Font.custom("Minecraft", size: 25.0))
                     
-                    Button("Mute") {
-                        isMuted.toggle()
+                    HStack {
+                        Button("Mute") {
+                            isMuted.toggle()
+                        }
+                        
+                        Button("Haptic Feedback") {
+                            isFeedbackMuted.toggle()
+                        }
                     }
 
 

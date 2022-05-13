@@ -10,6 +10,7 @@ import SpriteKit
 
 struct SpriteKitContainer : UIViewRepresentable {
     var isMuted: Bool?
+    var isFeedbackMuted: Bool?
     
     class Coordinator: NSObject {
         var scene: GameScene? = GameScene()
@@ -34,6 +35,7 @@ struct SpriteKitContainer : UIViewRepresentable {
         aScene.scaleMode = .resizeFill
         context.coordinator.scene = aScene
         context.coordinator.scene?.isMuted = isMuted!
+        context.coordinator.scene?.isFeedbackMuted = isFeedbackMuted!
         return view
     }
     
@@ -47,23 +49,27 @@ struct SpriteKitContainer : UIViewRepresentable {
 struct GameSceneView: View {
     @Environment(\.scenePhase) var scenePhase
     var gameScene: GameScene = GameScene()
+    @Binding var music: AudioPlayer
     @Binding var isMuted: Bool
+    @Binding var isFeedbackMuted: Bool
     
     var body: some View {
         //        SpriteView(scene: gameScene)
-        SpriteKitContainer(isMuted: isMuted)
+        SpriteKitContainer(isMuted: isMuted, isFeedbackMuted: isFeedbackMuted)
             .ignoresSafeArea()
             .onChange(of: scenePhase) { newPhase in
                 if newPhase == .active {
-                    print("Active")
+                    if !gameScene.gameLogic.isGameOver {
+                        music.playBackgroundMusic()
+                    }
                     gameScene.view?.isPaused = false
                     gameScene.view?.scene?.isPaused = false
                 } else if newPhase == .inactive {
-                    print("Inactive")
+                    music.stopBackgroundMusic()
                     gameScene.view?.isPaused = true
                     gameScene.view?.scene?.isPaused = true
                 } else if newPhase == .background {
-                    print("Background")
+                    music.stopBackgroundMusic()
                     gameScene.view?.isPaused = true
                     gameScene.view?.scene?.isPaused = true
                 }

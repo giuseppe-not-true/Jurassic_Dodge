@@ -59,6 +59,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     var cam = SKCameraNode()
     
     var isMuted: Bool = false
+    var isFeedbackMuted: Bool = false
 //    let backgroundMusic = SKAudioNode(fileNamed: "meteor shower.wav")
 //    let meteorSound = SKAction.playSoundFileNamed("meteor.wav", waitForCompletion: true)
     let hitSound = SKAction.playSoundFileNamed("roger-hit.wav", waitForCompletion: true)
@@ -457,11 +458,11 @@ extension GameScene {
                     }
                 }
                 
-                feedback.notificationOccurred(.error)
-                
+                if !self.isFeedbackMuted {
+                    feedback.notificationOccurred(.error)
+                }
                 
                 if !self.isMuted {
-                    print(self.isMuted)
                     ground.run(hitSound)
                 }
                 
@@ -508,7 +509,9 @@ extension GameScene {
                     }
                 }
                 
-                feedback.notificationOccurred(.error)
+                if !self.isFeedbackMuted {
+                    feedback.notificationOccurred(.error)
+                }
                 
                 if !self.isMuted {
                     ground.run(hitSound)
@@ -857,11 +860,6 @@ extension GameScene {
 
 extension GameScene {
     private func gameOverDisplay() {
-//        backgroundMusic.run(SKAction.stop())
-//        backgroundMusic.removeFromParent()
-        
-//        self.removeAllChildren()
-//        self.removeAllActions()
         
         for i in 0...2 {
             healthPoints[i].removeFromParent()
@@ -869,7 +867,7 @@ extension GameScene {
 
         cam.removeFromParent()
         
-//        self.removeFromParent()
+        self.removeFromParent()
         
         let gameOverScene = GameOverScene(size: size)
         gameOverScene.scaleMode = scaleMode
