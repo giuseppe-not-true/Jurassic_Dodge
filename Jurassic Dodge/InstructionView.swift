@@ -11,10 +11,16 @@ struct InstructionView: View {
     @ObservedObject var gameLogic: GameLogic = GameLogic.shared
 
     var body: some View {
-        Image("background")
+        Image("background - meteor")
             .resizable()
-            .ignoresSafeArea()
+            .aspectRatio(contentMode: .fill)
+            .frame(minWidth: UIScreen.main.bounds.width, minHeight: UIScreen.main.bounds.height)
+            .offset(x: 0, y: -30)
             .overlay {
+                Color.black
+                    .ignoresSafeArea()
+                    .opacity(0.5)
+                
                 Text("Tap to play")
                     .foregroundColor(.white)
                     .font(Font.custom("Minecraft", size: 25.0))

@@ -870,6 +870,15 @@ extension GameScene {
         self.removeFromParent()
         
         let gameOverScene = GameOverScene(size: size)
+        
+        if self.isMuted {
+            gameOverScene.isMuted = true
+        }
+        
+        if self.isFeedbackMuted {
+            gameOverScene.isFeedbackMuted = true
+        }
+        
         gameOverScene.scaleMode = scaleMode
         
         let reveal = SKTransition.fade(withDuration: 0.5)
