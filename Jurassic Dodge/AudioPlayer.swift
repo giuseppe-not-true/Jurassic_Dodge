@@ -18,6 +18,7 @@ class AudioPlayer {
         
         do {
             backgroundMusicPlayer = try AVAudioPlayer(contentsOf: url)
+            backgroundMusicPlayer.numberOfLoops = -1
         } catch {
             // couldn't load file :(
         }
@@ -25,14 +26,17 @@ class AudioPlayer {
     
     func playBackgroundMusic() {
         backgroundMusicPlayer.play()
+        backgroundMusicPlayer.numberOfLoops = -1
     }
     
     func stopBackgroundMusic() {
         backgroundMusicPlayer.pause()
+        backgroundMusicPlayer.numberOfLoops = -1
     }
     
     func resetBackgroundMusic() {
         backgroundMusicPlayer.pause()
         backgroundMusicPlayer.currentTime = 0
+        backgroundMusicPlayer.numberOfLoops = -1
     }
 }

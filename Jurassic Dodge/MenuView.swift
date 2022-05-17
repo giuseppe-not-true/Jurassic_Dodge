@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 struct MenuView: View {
+    @State private var textOpacity = 1.0
+    
     @ObservedObject var gameLogic: GameLogic = GameLogic.shared
     @State var highScore = 0
     @Binding var isMuted: Bool
@@ -34,21 +36,35 @@ struct MenuView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: UIScreen.main.bounds.width/2, height: UIScreen.main.bounds.height/3)
-//                            .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/6)
+                        //                            .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/6)
                         
                         Image("DODGE")
                             .resizable()
                             .scaledToFit()
                             .frame(width: UIScreen.main.bounds.width/2, height: UIScreen.main.bounds.height/6)
-//                            .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/6)
+                        //                            .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/6)
                     }
                     .padding()
                     
-                    Text("Highscore: \(String(UserDefaults.standard.integer(forKey: "HighScore")))")
-                        .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height*0.15)
-                        .foregroundColor(.white)
-                        .font(Font.custom("Minecraft", size: 25.0))
-                    
+                    VStack {
+                        Text("Highscore: \(String(UserDefaults.standard.integer(forKey: "HighScore")))")
+                            .foregroundColor(.white)
+                            .font(Font.custom("Minecraft", size: 25.0))
+                        
+                        Text("Tap to play")
+                            .foregroundColor(.white)
+                            .font(Font.custom("Minecraft", size: 25.0))
+                            .padding()
+                            .opacity(textOpacity)
+                            .onAppear{
+                                withAnimation{
+                                    textOpacity = 0.0
+                                }
+                            }
+                            .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true))
+                    }
+                    .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height*0.15)
+
                     HStack {
                         Button {
                             isMuted.toggle()
@@ -82,19 +98,7 @@ struct MenuView: View {
                     
                 }
             }
-            
-            //            Image("dino-front")
-            //                .resizable()
-            //                .frame(width: 100.0, height: 100.0)
-            //                .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height * 0.85)
         }
-        //        .overlay {
-        //            Color.black
-        //                .ignoresSafeArea()
-        //                .opacity(0.5)
-        //
-        //
-        //        }
         .onTapGesture {
             gameLogic.currentGameState = .instructions
         }
