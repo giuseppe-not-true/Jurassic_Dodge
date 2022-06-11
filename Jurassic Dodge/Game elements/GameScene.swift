@@ -40,7 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     
     var score: SKLabelNode!
     
-    var healthPoints: [SKSpriteNode] = [SKSpriteNode(imageNamed: "heart"), SKSpriteNode(imageNamed: "heart"), SKSpriteNode(imageNamed: "heart")]
+    var healthPoints: [SKSpriteNode] = [SKSpriteNode(imageNamed: "power-up-heart"), SKSpriteNode(imageNamed: "power-up-heart"), SKSpriteNode(imageNamed: "power-up-heart")]
     
     var isMovingToTheRight: Bool = false
     var isMovingToTheLeft: Bool = false
