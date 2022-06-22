@@ -20,8 +20,13 @@ class PlayerClass: SKSpriteNode {
     var idle: SKTexture
     public var hasArmor: Bool = false
     public var hasMango: Bool = false
+    public var mangoTimer = Timer()
     public var isInvincible: Bool = false
     public var invincibleTimer = Timer()
+    
+    public var goingMango = SKAction()
+    public var comingFromMango = SKAction()
+    public var mangoSequence = SKAction()
     
     init(imageNamed: String) {
         
@@ -32,6 +37,35 @@ class PlayerClass: SKSpriteNode {
         idle = SKTexture(imageNamed: "dino-front")
         
         super.init(texture: SKTexture(imageNamed: "dino-front"), color: UIColor.clear, size: SKTexture(imageNamed: "dino-front").size())
+        
+        self.goingMango = SKAction.run {
+            if self.hasArmor {
+                self.updateWalkAnimations(powerUp: "red-armor")
+            } else {
+                self.updateWalkAnimations(powerUp: "mango")
+            }
+        }
+        
+        self.comingFromMango = SKAction.run {
+            if self.hasArmor {
+                self.updateWalkAnimations(powerUp: "armor")
+            } else {
+                self.updateWalkAnimations(powerUp: "none")
+            }
+        }
+        
+        self.mangoSequence = SKAction.sequence([
+            .wait(forDuration: 4),
+            comingFromMango,
+            .wait(forDuration: 0.2),
+            goingMango,
+            .wait(forDuration: 0.2),
+            comingFromMango,
+            .wait(forDuration: 0.2),
+            goingMango,
+            .wait(forDuration: 0.2),
+            comingFromMango
+        ])
         
 //        super.init(texture: SKTexture(imageNamed: imageNamed), color: UIColor.clear, size: SKTexture(imageNamed: imageNamed).size())
         
@@ -74,6 +108,7 @@ class PlayerClass: SKSpriteNode {
         if (isMovingRight == true) {
             self.walkRightAnimation()
         }
+        
 //        if (isMovingRight == false && isMovingRight == false) {
 //            self.idleAnimation()
 //        }

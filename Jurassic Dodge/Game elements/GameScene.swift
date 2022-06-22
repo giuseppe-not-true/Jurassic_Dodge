@@ -55,7 +55,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     var lastUpdate: TimeInterval = 0
     var spawnTime = 2.0
     var counter = 0
-    var mangoTimer = Timer()
     
     var cam = SKCameraNode()
     
@@ -607,8 +606,10 @@ extension GameScene {
                         self.gameLogic.score(points: 2)
                         self.counter += 2
                         self.score.text = "Score: \(self.gameLogic.currentScore)"
-                        self.mangoTimer.invalidate()
-                        self.mangoTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
+                        self.player.mangoTimer.invalidate()
+//                        self.player.removeAction(forKey: "mangoSequence")
+//                        self.player.run(self.player.mangoSequence, withKey: "mangoSequence")
+                        self.player.mangoTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
                             self.player.speed /= 1.5
                             self.player.hasMango = false
                             if self.player.hasArmor {
@@ -635,7 +636,8 @@ extension GameScene {
                             self.moveRight()
                         }
                         self.player.speed *= 1.5
-                        self.mangoTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
+//                        self.player.run(self.player.mangoSequence, withKey: "mangoSequence")
+                        self.player.mangoTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
                             self.player.speed /= 1.5
                             self.player.hasMango = false
                             if self.player.hasArmor {
@@ -663,7 +665,8 @@ extension GameScene {
                             self.moveRight()
                         }
                         self.player.speed *= 1.5
-                        self.mangoTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
+//                        self.player.run(self.player.mangoSequence, withKey: "mangoSequence")
+                        self.player.mangoTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
                             self.player.speed /= 1.5
                             self.player.hasMango = false
                             if self.player.hasArmor {
@@ -750,8 +753,10 @@ extension GameScene {
                         self.gameLogic.score(points: 2)
                         self.counter += 2
                         self.score.text = "Score: \(self.gameLogic.currentScore)"
-                        self.mangoTimer.invalidate()
-                        self.mangoTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
+                        self.player.mangoTimer.invalidate()
+//                        self.player.removeAction(forKey: "mangoSequence")
+//                        self.player.run(self.player.mangoSequence, withKey: "mangoSequence")
+                        self.player.mangoTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
                             self.player.speed /= 1.5
                             self.player.hasMango = false
                             if self.player.hasArmor {
@@ -778,7 +783,8 @@ extension GameScene {
                             self.moveRight()
                         }
                         self.player.speed *= 1.5
-                        self.mangoTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
+//                        self.player.run(self.player.mangoSequence, withKey: "mangoSequence")
+                        self.player.mangoTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
                             self.player.speed /= 1.5
                             self.player.hasMango = false
                             if self.player.hasArmor {
@@ -806,7 +812,8 @@ extension GameScene {
                             self.moveRight()
                         }
                         self.player.speed *= 1.5
-                        self.mangoTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
+//                        self.player.run(self.player.mangoSequence, withKey: "mangoSequence")
+                        self.player.mangoTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
                             self.player.speed /= 1.5
                             self.player.hasMango = false
                             if self.player.hasArmor {
