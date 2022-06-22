@@ -20,6 +20,8 @@ class PlayerClass: SKSpriteNode {
     var idle: SKTexture
     public var hasArmor: Bool = false
     public var hasMango: Bool = false
+    public var isInvincible: Bool = false
+    public var invincibleTimer = Timer()
     
     init(imageNamed: String) {
         

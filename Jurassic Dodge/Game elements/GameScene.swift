@@ -438,33 +438,45 @@ extension GameScene {
             }
             
             if let player = secondBody.node, player.name == "player" {
-                if self.player.hasArmor {
-                    self.player.hasArmor = false
-                    if self.player.hasMango {
-                        self.player.animationName = "mango"
+                if self.player.isInvincible == false {
+                    self.player.isInvincible = true
+                    self.player.alpha = 0.5
+                    
+                    self.player.invincibleTimer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: false) { (_) in
+                        self.player.alpha = 1.0
+                        self.player.isInvincible = false
                     }
-                    else {
-                        self.player.animationName = "dino"
+                    
+                    if self.player.hasArmor {
+                        self.player.hasArmor = false
+                        if self.player.hasMango {
+                            self.player.animationName = "mango"
+                        }
+                        else {
+                            self.player.animationName = "dino"
+                        }
+                        self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                        if (self.player.isMovingLeft) {
+                            self.moveLeft()
+                        }
+                        else if(self.player.isMovingRight) {
+                            self.moveRight()
+                        }
+                    } else {
+                        if self.player.lives > 0 {
+                            updateLives(update: -1)
+                        }
                     }
-                    self.player.updateWalkAnimations(powerUp: self.player.animationName)
-                    if (self.player.isMovingLeft) {
-                        self.moveLeft()
+                    
+                    if !self.isFeedbackMuted {
+                        feedback.notificationOccurred(.error)
                     }
-                    else if(self.player.isMovingRight) {
-                        self.moveRight()
+                    
+                    if !self.isMuted {
+                        ground.run(hitSound)
                     }
                 } else {
-                    if self.player.lives > 0 {
-                        updateLives(update: -1)
-                    }
-                }
-                
-                if !self.isFeedbackMuted {
-                    feedback.notificationOccurred(.error)
-                }
-                
-                if !self.isMuted {
-                    ground.run(hitSound)
+                    
                 }
                 
                 node.removeFromParent()
@@ -489,33 +501,45 @@ extension GameScene {
             }
             
             if let player = firstBody.node, player.name == "player" {
-                if self.player.hasArmor {
-                    self.player.hasArmor = false
-                    if self.player.hasMango {
-                        self.player.animationName = "mango"
+                if self.player.isInvincible == false {
+                    self.player.isInvincible = true
+                    self.player.alpha = 0.5
+                    
+                    self.player.invincibleTimer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: false) { (_) in
+                        self.player.alpha = 1.0
+                        self.player.isInvincible = false
                     }
-                    else {
-                        self.player.animationName = "dino"
+                    
+                    if self.player.hasArmor {
+                        self.player.hasArmor = false
+                        if self.player.hasMango {
+                            self.player.animationName = "mango"
+                        }
+                        else {
+                            self.player.animationName = "dino"
+                        }
+                        self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                        if (self.player.isMovingLeft) {
+                            self.moveLeft()
+                        }
+                        else if(self.player.isMovingRight) {
+                            self.moveRight()
+                        }
+                    } else {
+                        if self.player.lives > 0 {
+                            updateLives(update: -1)
+                        }
                     }
-                    self.player.updateWalkAnimations(powerUp: self.player.animationName)
-                    if (self.player.isMovingLeft) {
-                        self.moveLeft()
+                    
+                    if !self.isFeedbackMuted {
+                        feedback.notificationOccurred(.error)
                     }
-                    else if(self.player.isMovingRight) {
-                        self.moveRight()
+                    
+                    if !self.isMuted {
+                        ground.run(hitSound)
                     }
                 } else {
-                    if self.player.lives > 0 {
-                        updateLives(update: -1)
-                    }
-                }
-                
-                if !self.isFeedbackMuted {
-                    feedback.notificationOccurred(.error)
-                }
-                
-                if !self.isMuted {
-                    ground.run(hitSound)
+                    
                 }
                 
                 node.removeFromParent()
