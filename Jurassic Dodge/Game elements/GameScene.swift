@@ -29,7 +29,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
      **/
     
     @ObservedObject var gameLogic: GameLogic = GameLogic.shared
-        
+    
     var waitAction = SKAction()
     var meteorCycleAction = SKAction()
     var bg: SKSpriteNode!
@@ -55,13 +55,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     var lastUpdate: TimeInterval = 0
     var spawnTime = 2.0
     var counter = 0
+    var mangoTimer = Timer()
     
     var cam = SKCameraNode()
     
     var isMuted: Bool = false
     var isFeedbackMuted: Bool = false
-//    let backgroundMusic = SKAudioNode(fileNamed: "meteor shower.wav")
-//    let meteorSound = SKAction.playSoundFileNamed("meteor.wav", waitForCompletion: true)
+    //    let backgroundMusic = SKAudioNode(fileNamed: "meteor shower.wav")
+    //    let meteorSound = SKAction.playSoundFileNamed("meteor.wav", waitForCompletion: true)
     let hitSound = SKAction.playSoundFileNamed("roger-hit.wav", waitForCompletion: true)
     let armorSound = SKAction.playSoundFileNamed("armor.mp3", waitForCompletion: true)
     let mangoSound = SKAction.playSoundFileNamed("mango.wav", waitForCompletion: true)
@@ -71,7 +72,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     
     override func didMove(to view: SKView) {
         print("in did move")
-                
+        
         self.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         self.setUpGame()
         self.setUpPhysicsWorld()
@@ -89,9 +90,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
             self.moveLeft()
         }
         
-//        if arrivedAtDestination {
-//            self.stop()
-//        }
+        //        if arrivedAtDestination {
+        //            self.stop()
+        //        }
         
         if (self.gameLogic.currentScore < 50) {
             if counter >= 5 {
@@ -156,7 +157,7 @@ extension GameScene {
     private func createBackground() {
         bg = SKSpriteNode(imageNamed: "background")
         bg.name = "background"
-//        bg.position = CGPoint(x: 500, y: 500)
+        //        bg.position = CGPoint(x: 500, y: 500)
         bg.size.width *= 1
         bg.size.height *= 1.1
         bg.zPosition = bgzPos
@@ -179,7 +180,7 @@ extension GameScene {
         ground.physicsBody?.contactTestBitMask = PhysicsCategory.meteor
         
         addChild(ground)
-//        self.addChild(backgroundMusic)
+        //        self.addChild(backgroundMusic)
     }
     
     private func createPlayer(initPos: CGPoint) {
@@ -199,9 +200,9 @@ extension GameScene {
         
         player.speed = 10
         
-//        let xRange = SKRange(lowerLimit: -frame.width, upperLimit: frame.width)
-//        let xConstraint = SKConstraint.positionX(xRange)
-//        self.player.constraints = [xConstraint]
+        //        let xRange = SKRange(lowerLimit: -frame.width, upperLimit: frame.width)
+        //        let xConstraint = SKConstraint.positionX(xRange)
+        //        self.player.constraints = [xConstraint]
         
         addChild(player)
     }
@@ -382,9 +383,9 @@ extension GameScene {
             }
         }
         
-//        return CGPoint(x: 0, y: positionY)
+        //        return CGPoint(x: 0, y: positionY)
         return CGPoint(x: positionX, y: positionY)
-
+        
     }
     
     private func newMeteor(at position: CGPoint) {
@@ -419,7 +420,7 @@ extension GameScene {
     func didBegin(_ contact: SKPhysicsContact) {
         let firstBody: SKPhysicsBody = contact.bodyA
         let secondBody: SKPhysicsBody = contact.bodyB
-
+        
         if let node = firstBody.node, node.name == "meteor" {
             if let ground = firstBody.node, ground.name == "ground" {
                 self.gameLogic.score(points: 1)
@@ -432,7 +433,7 @@ extension GameScene {
                     newPowerUp(at: CGPoint(x: node.position.x, y: self.player.position.y), powerUpName: tempNode.powerUpName)
                 }
                 
-//                ground.run(meteorSound)
+                //                ground.run(meteorSound)
                 node.removeFromParent()
             }
             
@@ -483,7 +484,7 @@ extension GameScene {
                     newPowerUp(at: CGPoint(x: node.position.x, y: self.player.position.y), powerUpName: tempNode.powerUpName)
                 }
                 
-//                ground.run(meteorSound)
+                //                ground.run(meteorSound)
                 node.removeFromParent()
             }
             
@@ -521,134 +522,144 @@ extension GameScene {
             }
             
         }
-                
+        
         if let player = firstBody.node, player.name == "player" {
             if let powerUp = secondBody.node as? PowerUpClass, powerUp.name == "power-up" {
-                    switch(powerUp.powerUpType) {
-                    case .heart:
-                        if !self.isMuted {
-                            ground.run(healthSound)
-                        }
-                        if self.player.lives < 3 {
-                            updateLives(update: 1)
+                switch(powerUp.powerUpType) {
+                case .heart:
+                    if !self.isMuted {
+                        ground.run(healthSound)
+                    }
+                    if self.player.lives < 3 {
+                        updateLives(update: 1)
+                    } else {
+                        self.gameLogic.score(points: 2)
+                        self.counter += 2
+                        self.score.text = "Score: \(self.gameLogic.currentScore)"
+                    }
+                    break
+                case .armor:
+                    if !self.isMuted {
+                        ground.run(armorSound)
+                    }
+                    switch(self.player.hasArmor) {
+                    case true:
+                        self.gameLogic.score(points: 2)
+                        self.counter += 2
+                        self.score.text = "Score: \(self.gameLogic.currentScore)"
+                        break
+                    case false:
+                        if self.player.hasMango{
+                            self.player.animationName = "red-armor"
+                            self.player.hasArmor = true
+                            self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                            if (self.player.isMovingLeft) {
+                                self.moveLeft()
+                            }
+                            else if(self.player.isMovingRight) {
+                                self.moveRight()
+                            }
                         } else {
-                            self.gameLogic.score(points: 2)
-                            self.counter += 2
-                            self.score.text = "Score: \(self.gameLogic.currentScore)"
-                        }
-                        break
-                    case .armor:
-                        if !self.isMuted {
-                            ground.run(armorSound)
-                        }
-                        switch(self.player.hasArmor) {
-                        case true:
-                            self.gameLogic.score(points: 2)
-                            self.counter += 2
-                            self.score.text = "Score: \(self.gameLogic.currentScore)"
-                            break
-                        case false:
-                            if self.player.hasMango{
-                                self.player.animationName = "red-armor"
-                                self.player.hasArmor = true
-                                self.player.updateWalkAnimations(powerUp: self.player.animationName)
-                                if (self.player.isMovingLeft) {
-                                    self.moveLeft()
-                                }
-                                else if(self.player.isMovingRight) {
-                                    self.moveRight()
-                                }
-                            } else {
-                                self.player.animationName = "armor"
-                                self.player.hasArmor = true
-                                self.player.updateWalkAnimations(powerUp: self.player.animationName)
-                                if (self.player.isMovingLeft) {
-                                    self.moveLeft()
-                                }
-                                else if(self.player.isMovingRight) {
-                                    self.moveRight()
-                                }
+                            self.player.animationName = "armor"
+                            self.player.hasArmor = true
+                            self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                            if (self.player.isMovingLeft) {
+                                self.moveLeft()
                             }
-                            break
-                        default:
-                            break
-                        }
-                        break
-                    case .mango:
-                        if !self.isMuted {
-                            ground.run(mangoSound)
-                        }
-                        switch(self.player.hasMango) {
-                        case true:
-                            self.gameLogic.score(points: 2)
-                            self.counter += 2
-                            self.score.text = "Score: \(self.gameLogic.currentScore)"
-                            break
-                        case false:
-                            if self.player.hasArmor {
-                                self.player.animationName = "red-armor"
-                                self.player.hasMango = true
-                                self.player.updateWalkAnimations(powerUp: self.player.animationName)
-                                if (self.player.isMovingLeft) {
-                                    self.moveLeft()
-                                }
-                                else if(self.player.isMovingRight) {
-                                    self.moveRight()
-                                }
-                                self.player.speed *= 1.5
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                                    self.player.speed /= 1.5
-                                    self.player.hasMango = false
-                                    if self.player.hasArmor {
-                                        self.player.animationName = "armor"
-                                    } else {
-                                        self.player.animationName = "dino"
-                                    }
-                                    self.player.updateWalkAnimations(powerUp: self.player.animationName)
-                                    if (self.player.isMovingLeft) {
-                                        self.moveLeft()
-                                    }
-                                    else if(self.player.isMovingRight) {
-                                        self.moveRight()
-                                    }
-                                }
-
-                            } else {
-                                self.player.animationName = "mango"
-                                self.player.hasMango = true
-                                self.player.updateWalkAnimations(powerUp: self.player.animationName)
-                                if (self.player.isMovingLeft) {
-                                    self.moveLeft()
-                                }
-                                else if(self.player.isMovingRight) {
-                                    self.moveRight()
-                                }
-                                self.player.speed *= 1.5
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                                    self.player.speed /= 1.5
-                                    self.player.hasMango = false
-                                    if self.player.hasArmor {
-                                        self.player.animationName = "armor"
-                                    } else {
-                                        self.player.animationName = "dino"
-                                    }
-                                    self.player.updateWalkAnimations(powerUp: self.player.animationName)
-                                    if (self.player.isMovingLeft) {
-                                        self.moveLeft()
-                                    }
-                                    else if(self.player.isMovingRight) {
-                                        self.moveRight()
-                                    }
-                                }
+                            else if(self.player.isMovingRight) {
+                                self.moveRight()
                             }
-                            break
-                        default:
-                            break
                         }
                         break
                     default:
                         break
                     }
+                    break
+                case .mango:
+                    if !self.isMuted {
+                        ground.run(mangoSound)
+                    }
+                    if self.player.hasMango {
+                        self.gameLogic.score(points: 2)
+                        self.counter += 2
+                        self.score.text = "Score: \(self.gameLogic.currentScore)"
+                        self.mangoTimer.invalidate()
+                        self.mangoTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
+                            self.player.speed /= 1.5
+                            self.player.hasMango = false
+                            if self.player.hasArmor {
+                                self.player.animationName = "armor"
+                            } else {
+                                self.player.animationName = "dino"
+                            }
+                            self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                            if (self.player.isMovingLeft) {
+                                self.moveLeft()
+                            }
+                            else if(self.player.isMovingRight) {
+                                self.moveRight()
+                            }
+                        }
+                    } else if self.player.hasArmor {
+                        self.player.animationName = "red-armor"
+                        self.player.hasMango = true
+                        self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                        if (self.player.isMovingLeft) {
+                            self.moveLeft()
+                        }
+                        else if(self.player.isMovingRight) {
+                            self.moveRight()
+                        }
+                        self.player.speed *= 1.5
+                        self.mangoTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
+                            self.player.speed /= 1.5
+                            self.player.hasMango = false
+                            if self.player.hasArmor {
+                                self.player.animationName = "armor"
+                            } else {
+                                self.player.animationName = "dino"
+                            }
+                            self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                            if (self.player.isMovingLeft) {
+                                self.moveLeft()
+                            }
+                            else if(self.player.isMovingRight) {
+                                self.moveRight()
+                            }
+                        }
+                        
+                    } else {
+                        self.player.animationName = "mango"
+                        self.player.hasMango = true
+                        self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                        if (self.player.isMovingLeft) {
+                            self.moveLeft()
+                        }
+                        else if(self.player.isMovingRight) {
+                            self.moveRight()
+                        }
+                        self.player.speed *= 1.5
+                        self.mangoTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
+                            self.player.speed /= 1.5
+                            self.player.hasMango = false
+                            if self.player.hasArmor {
+                                self.player.animationName = "armor"
+                            } else {
+                                self.player.animationName = "dino"
+                            }
+                            self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                            if (self.player.isMovingLeft) {
+                                self.moveLeft()
+                            }
+                            else if(self.player.isMovingRight) {
+                                self.moveRight()
+                            }
+                        }
+                    }
+                    break
+                default:
+                    break
+                }
                 
                 powerUp.removeFromParent()
             }
@@ -711,72 +722,82 @@ extension GameScene {
                     if !self.isMuted {
                         ground.run(mangoSound)
                     }
-                    switch(self.player.hasMango) {
-                    case true:
+                    if self.player.hasMango {
                         self.gameLogic.score(points: 2)
                         self.counter += 2
                         self.score.text = "Score: \(self.gameLogic.currentScore)"
-                        break
-                    case false:
-                        if self.player.hasArmor {
-                            self.player.animationName = "red-armor"
-                            self.player.hasMango = true
+                        self.mangoTimer.invalidate()
+                        self.mangoTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
+                            self.player.speed /= 1.5
+                            self.player.hasMango = false
+                            if self.player.hasArmor {
+                                self.player.animationName = "armor"
+                            } else {
+                                self.player.animationName = "dino"
+                            }
                             self.player.updateWalkAnimations(powerUp: self.player.animationName)
                             if (self.player.isMovingLeft) {
                                 self.moveLeft()
                             }
                             else if(self.player.isMovingRight) {
                                 self.moveRight()
-                            }
-                            self.player.speed *= 1.5
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                                self.player.speed /= 1.5
-                                self.player.hasMango = false
-                                if self.player.hasArmor {
-                                    self.player.animationName = "armor"
-                                } else {
-                                    self.player.animationName = "dino"
-                                }
-                                self.player.updateWalkAnimations(powerUp: self.player.animationName)
-                                if (self.player.isMovingLeft) {
-                                    self.moveLeft()
-                                }
-                                else if(self.player.isMovingRight) {
-                                    self.moveRight()
-                                }
-                            }
-
-                        } else {
-                            self.player.animationName = "mango"
-                            self.player.hasMango = true
-                            self.player.updateWalkAnimations(powerUp: self.player.animationName)
-                            if (self.player.isMovingLeft) {
-                                self.moveLeft()
-                            }
-                            else if(self.player.isMovingRight) {
-                                self.moveRight()
-                            }
-                            self.player.speed *= 1.5
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                                self.player.speed /= 1.5
-                                self.player.hasMango = false
-                                if self.player.hasArmor {
-                                    self.player.animationName = "armor"
-                                } else {
-                                    self.player.animationName = "dino"
-                                }
-                                self.player.updateWalkAnimations(powerUp: self.player.animationName)
-                                if (self.player.isMovingLeft) {
-                                    self.moveLeft()
-                                }
-                                else if(self.player.isMovingRight) {
-                                    self.moveRight()
-                                }
                             }
                         }
-                        break
-                    default:
-                        break
+                    } else if self.player.hasArmor {
+                        self.player.animationName = "red-armor"
+                        self.player.hasMango = true
+                        self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                        if (self.player.isMovingLeft) {
+                            self.moveLeft()
+                        }
+                        else if(self.player.isMovingRight) {
+                            self.moveRight()
+                        }
+                        self.player.speed *= 1.5
+                        self.mangoTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
+                            self.player.speed /= 1.5
+                            self.player.hasMango = false
+                            if self.player.hasArmor {
+                                self.player.animationName = "armor"
+                            } else {
+                                self.player.animationName = "dino"
+                            }
+                            self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                            if (self.player.isMovingLeft) {
+                                self.moveLeft()
+                            }
+                            else if(self.player.isMovingRight) {
+                                self.moveRight()
+                            }
+                        }
+                        
+                    } else {
+                        self.player.animationName = "mango"
+                        self.player.hasMango = true
+                        self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                        if (self.player.isMovingLeft) {
+                            self.moveLeft()
+                        }
+                        else if(self.player.isMovingRight) {
+                            self.moveRight()
+                        }
+                        self.player.speed *= 1.5
+                        self.mangoTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
+                            self.player.speed /= 1.5
+                            self.player.hasMango = false
+                            if self.player.hasArmor {
+                                self.player.animationName = "armor"
+                            } else {
+                                self.player.animationName = "dino"
+                            }
+                            self.player.updateWalkAnimations(powerUp: self.player.animationName)
+                            if (self.player.isMovingLeft) {
+                                self.moveLeft()
+                            }
+                            else if(self.player.isMovingRight) {
+                                self.moveRight()
+                            }
+                        }
                     }
                     break
                 default:
@@ -830,8 +851,8 @@ extension GameScene {
         powerUp.physicsBody?.collisionBitMask = PhysicsCategory.ground
         
         addChild(powerUp)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+        
+        Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
             powerUp.removeFromParent()
         }
         
@@ -864,7 +885,7 @@ extension GameScene {
         for i in 0...2 {
             healthPoints[i].removeFromParent()
         }
-
+        
         cam.removeFromParent()
         
         self.removeFromParent()
