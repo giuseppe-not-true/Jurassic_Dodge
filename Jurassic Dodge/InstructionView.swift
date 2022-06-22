@@ -23,7 +23,8 @@ struct InstructionView: View {
             .resizable()
             .aspectRatio(contentMode: .fill)
             .frame(minWidth: UIScreen.main.bounds.width, minHeight: UIScreen.main.bounds.height)
-            .offset(x: 0, y: -30)
+            .frame(minWidth: UIScreen.main.bounds.width, minHeight: UIScreen.main.bounds.height)
+            .offset(x: 0, y: (((UIScreen.main.bounds.height) > 413) && UIScreen.main.bounds.width > 736) ? -30 : 0)
             .overlay {
                 Color.black
                     .ignoresSafeArea()
