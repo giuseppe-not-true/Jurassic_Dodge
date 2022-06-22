@@ -852,8 +852,22 @@ extension GameScene {
         
         addChild(powerUp)
         
-        Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
-            powerUp.removeFromParent()
+        Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { (_) in
+            let fadeOut = SKAction.fadeOut(withDuration: 0.25)
+            let fadeIn = SKAction.fadeIn(withDuration: 0.25)
+            
+            let fade = SKAction.sequence([
+                fadeOut,
+                fadeIn
+            ])
+            
+            let fadePowerUp = SKAction.repeatForever(fade)
+            
+            powerUp.run(fadePowerUp)
+            
+            Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (_) in
+                powerUp.removeFromParent()
+            }
         }
         
     }
