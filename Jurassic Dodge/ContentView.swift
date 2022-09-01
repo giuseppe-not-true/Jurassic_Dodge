@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SpriteKit
+import GameKit
 import AVFoundation
 
 struct ContentView: View {
@@ -14,13 +15,42 @@ struct ContentView: View {
     @State var music = AudioPlayer()
     @State var isMuted: Bool = false
     @State var isFeedbackMuted: Bool = false
+    let localPlayer = GKLocalPlayer.local
+    
+    func authenticateUser() {
+        localPlayer.authenticateHandler = { vc, error in
+            guard error == nil else {
+                print(error?.localizedDescription ?? "")
+                return
+            }
+            GKAccessPoint.shared.isActive = localPlayer.isAuthenticated
+        }
+    }
+    
+    init() {
+        GKAccessPoint.shared.location = .topLeading
+        GKAccessPoint.shared.showHighlights = true
+        GKAccessPoint.shared.isActive = true
+    }
     
     var body: some View {
         switch gameLogic.currentGameState {
         case .mainScreen:
             MenuView(isMuted: $isMuted, isFeedbackMuted: $isFeedbackMuted)
                 .onAppear {
+                    authenticateUser()
                     music.stopBackgroundMusic()
+                    
+                    if GKLocalPlayer.local.isAuthenticated {
+                        GKLeaderboard.submitScore(
+                            UserDefaults.standard.integer(forKey: "HighScore"),
+                            context: 0,
+                            player: GKLocalPlayer.local,
+                            leaderboardIDs: ["Jurassic_Dodge_Highscores"]
+                        ) { error in
+                            print(error)
+                        }
+                    }
                 }
         case .instructions:
             InstructionView()

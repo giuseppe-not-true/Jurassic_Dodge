@@ -7,6 +7,7 @@
 
 import SpriteKit
 import GameplayKit
+import GameKit
 import SwiftUI
 import UIKit
 

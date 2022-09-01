@@ -8,6 +8,7 @@
 import Foundation
 import SpriteKit
 import SwiftUI
+import GameKit
 
 class GameOverScene: SKScene {
     @ObservedObject var gameLogic: GameLogic = GameLogic.shared

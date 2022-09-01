@@ -12,6 +12,7 @@
 		235C893A27F468180081CA52 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 235C893927F468180081CA52 /* Assets.xcassets */; };
 		235C893D27F468180081CA52 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 235C893C27F468180081CA52 /* Preview Assets.xcassets */; };
 		235C895E27F46A9F0081CA52 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235C895D27F46A9F0081CA52 /* GameScene.swift */; };
+		235EBC9728C127AB00077D9D /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 235EBC9628C127AB00077D9D /* GameKit.framework */; };
 		237474C8282BF6F500679F9D /* InstructionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237474C7282BF6F500679F9D /* InstructionView.swift */; };
 		2387D0A1282D16A9003828E2 /* GameSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2387D0A0282D16A9003828E2 /* GameSceneView.swift */; };
 		2387D0A3282D1FAA003828E2 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2387D0A2282D1FA9003828E2 /* AudioPlayer.swift */; };
@@ -42,6 +43,7 @@
 		235C893927F468180081CA52 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		235C893C27F468180081CA52 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		235C895D27F46A9F0081CA52 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		235EBC9628C127AB00077D9D /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		237474C7282BF6F500679F9D /* InstructionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionView.swift; sourceTree = "<group>"; };
 		2387D0A0282D16A9003828E2 /* GameSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneView.swift; sourceTree = "<group>"; };
 		2387D0A2282D1FA9003828E2 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				235EBC9728C127AB00077D9D /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +85,7 @@
 			children = (
 				235C893427F468160081CA52 /* Jurassic Dodge */,
 				235C893327F468160081CA52 /* Products */,
+				235EBC9528C127AB00077D9D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -119,6 +123,14 @@
 				235C893C27F468180081CA52 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		235EBC9528C127AB00077D9D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				235EBC9628C127AB00077D9D /* GameKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		23AF82C527F6E6A100679CC5 /* Fonts */ = {
@@ -404,6 +416,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = gamekit;
 				INFOPLIST_KEY_UIStatusBarHidden = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationLandscapeLeft";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -436,6 +449,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = gamekit;
 				INFOPLIST_KEY_UIStatusBarHidden = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationLandscapeLeft";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
