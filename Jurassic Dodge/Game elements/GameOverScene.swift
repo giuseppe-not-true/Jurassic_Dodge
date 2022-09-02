@@ -12,6 +12,7 @@ import GameKit
 
 class GameOverScene: SKScene {
     @ObservedObject var gameLogic: GameLogic = GameLogic.shared
+    @ObservedObject var gameCenter: GameCenterController = GameCenterController.shared
     
     var isMuted: Bool = false
     var isFeedbackMuted: Bool = false
@@ -27,7 +28,10 @@ class GameOverScene: SKScene {
     override init(size: CGSize) {
         super.init(size: size)
         
-        GKAccessPoint.shared.isActive = true
+        withAnimation {
+            gameCenter.submitScore()
+            gameCenter.accessPoint.isActive = true
+        }
         
         bg.name = "background"
         bg.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2)
@@ -105,8 +109,12 @@ class GameOverScene: SKScene {
     }
     
     func restartGame(){
-        let gameScene = GameScene(size: size)
+        withAnimation {
+            gameCenter.accessPoint.isActive = false
+        }
         
+        let gameScene = GameScene(size: size)
+                
         if self.isMuted {
             gameScene.isMuted = true
         }

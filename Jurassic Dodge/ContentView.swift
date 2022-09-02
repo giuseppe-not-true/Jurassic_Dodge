@@ -12,35 +12,13 @@ import AVFoundation
 
 struct ContentView: View {
     @ObservedObject var gameLogic: GameLogic = GameLogic.shared
+    @ObservedObject var gameCenter: GameCenterController = GameCenterController.shared
     @State var music = AudioPlayer()
     @State var isMuted: Bool = false
     @State var isFeedbackMuted: Bool = false
-    let localPlayer = GKLocalPlayer.local
-    
-    func authenticateUser() {
-        localPlayer.authenticateHandler = { vc, error in
-            guard error == nil else {
-                print(error?.localizedDescription ?? "")
-                return
-            }
-            GKAccessPoint.shared.isActive = localPlayer.isAuthenticated
-        }
-    }
     
     init() {
-        GKAccessPoint.shared.location = .topLeading
-        GKAccessPoint.shared.showHighlights = true
-        GKAccessPoint.shared.isActive = true
-        
-        if GKLocalPlayer.local.isAuthenticated {
-            GKLeaderboard.submitScore(
-                UserDefaults.standard.integer(forKey: "HighScore"),
-                context: 0,
-                player: GKLocalPlayer.local,
-                leaderboardIDs: ["Jurassic_Dodge_Highscores"]
-            ) { error in
-                print(error)
-            }
+        gameCenter.submitScore()
     }
     
     var body: some View {
@@ -48,23 +26,14 @@ struct ContentView: View {
         case .mainScreen:
             MenuView(isMuted: $isMuted, isFeedbackMuted: $isFeedbackMuted)
                 .onAppear {
-                    authenticateUser()
+                    gameCenter.authenticateUser()
                     music.stopBackgroundMusic()
                     
                     withAnimation {
-                        GKAccessPoint.shared.isActive = true
+                        gameCenter.accessPoint.isActive = true
                     }
                     
-                    if GKLocalPlayer.local.isAuthenticated {
-                        GKLeaderboard.submitScore(
-                            UserDefaults.standard.integer(forKey: "HighScore"),
-                            context: 0,
-                            player: GKLocalPlayer.local,
-                            leaderboardIDs: ["Jurassic_Dodge_Highscores"]
-                        ) { error in
-                            print(error)
-                        }
-                    }
+                    gameCenter.submitScore()
                 }
         case .instructions:
             InstructionView()
@@ -72,7 +41,7 @@ struct ContentView: View {
                     music.stopBackgroundMusic()
                     
                     withAnimation {
-                        GKAccessPoint.shared.isActive = false
+                        gameCenter.accessPoint.isActive = false
                     }
                 }
         case .playing:
@@ -83,7 +52,7 @@ struct ContentView: View {
                     }
                     
                     withAnimation {
-                        GKAccessPoint.shared.isActive = false
+                        gameCenter.accessPoint.isActive = false
                     }
                 }
                 .onChange(of: gameLogic.isGameOver) { newValue in
