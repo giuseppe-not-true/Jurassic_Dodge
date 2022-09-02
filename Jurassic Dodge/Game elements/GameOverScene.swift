@@ -27,6 +27,8 @@ class GameOverScene: SKScene {
     override init(size: CGSize) {
         super.init(size: size)
         
+        GKAccessPoint.shared.isActive = true
+        
         bg.name = "background"
         bg.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2)
         bg.size.width = self.frame.width

@@ -31,6 +31,16 @@ struct ContentView: View {
         GKAccessPoint.shared.location = .topLeading
         GKAccessPoint.shared.showHighlights = true
         GKAccessPoint.shared.isActive = true
+        
+        if GKLocalPlayer.local.isAuthenticated {
+            GKLeaderboard.submitScore(
+                UserDefaults.standard.integer(forKey: "HighScore"),
+                context: 0,
+                player: GKLocalPlayer.local,
+                leaderboardIDs: ["Jurassic_Dodge_Highscores"]
+            ) { error in
+                print(error)
+            }
     }
     
     var body: some View {
@@ -40,6 +50,10 @@ struct ContentView: View {
                 .onAppear {
                     authenticateUser()
                     music.stopBackgroundMusic()
+                    
+                    withAnimation {
+                        GKAccessPoint.shared.isActive = true
+                    }
                     
                     if GKLocalPlayer.local.isAuthenticated {
                         GKLeaderboard.submitScore(
@@ -56,12 +70,20 @@ struct ContentView: View {
             InstructionView()
                 .onAppear {
                     music.stopBackgroundMusic()
+                    
+                    withAnimation {
+                        GKAccessPoint.shared.isActive = false
+                    }
                 }
         case .playing:
             GameSceneView(music: $music, isMuted: $isMuted, isFeedbackMuted: $isFeedbackMuted)
                 .onAppear {
                     if !self.isMuted {
                         music.playBackgroundMusic()
+                    }
+                    
+                    withAnimation {
+                        GKAccessPoint.shared.isActive = false
                     }
                 }
                 .onChange(of: gameLogic.isGameOver) { newValue in
